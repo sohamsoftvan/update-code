@@ -9,7 +9,7 @@ import {
     AllCompanyOption,
     AllLocationOption
 } from "../../../../../utils/SuperAdmin/enums/CompanyOption";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import AllCameraLogTable from "./AllCameraLogTable";
 import FormDateRangePicker from "../../../../../utils/dateRangePicker/FormDateRangePicker";
 import moment from "moment/moment";

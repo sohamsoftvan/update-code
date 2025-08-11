@@ -7,11 +7,11 @@ import {MyResultPage} from "./MyResultTable/MyResultPage";
 
 export default function DeployedRTSPJobs() {
     return (
-        <Suspense fallback={<LayoutSplashScreen/>}>
-            <Switch>
-                <ContentRoute path={"/my-results"} component={MyResultPage}/>
-                {/*<MyResultPage />*/}
-            </Switch>
-        </Suspense>
+        // <Suspense fallback={<LayoutSplashScreen/>}>
+        //     <Switch>
+        //         <ContentRoute path={"/my-results"} component={MyResultPage}/>
+                <MyResultPage />
+        //     </Switch>
+        // </Suspense>
     );
 }

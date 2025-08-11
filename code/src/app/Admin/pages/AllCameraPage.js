@@ -7,14 +7,15 @@ AllCameraPage.propTypes = {};
 function AllCameraPage(props) {
   return (
     <div>
-      <Suspense fallback={<LayoutSplashScreen />}>
-        <Switch>
-          <ContentRoute
-            path={ADMIN_URL + "/allCamera"}
-            component={AllCameraTabPage}
-          />
-        </Switch>
-      </Suspense>
+        <AllCameraTabPage/>
+      {/*<Suspense fallback={<LayoutSplashScreen />}>*/}
+      {/*  <Switch>*/}
+      {/*    <ContentRoute*/}
+      {/*      path={ADMIN_URL + "/allCamera"}*/}
+      {/*      component={AllCameraTabPage}*/}
+      {/*    />*/}
+      {/*  </Switch>*/}
+      {/*</Suspense>*/}
     </div>
   );
 }

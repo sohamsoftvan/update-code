@@ -6,7 +6,7 @@ import {
      AllCameraStatusData,
     AllCompanyOption,
 } from "../../../../../utils/SuperAdmin/enums/CompanyOption";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import AllCameraTable from "./AllCameraTable";
 
 function AllCameraStatusCard() {

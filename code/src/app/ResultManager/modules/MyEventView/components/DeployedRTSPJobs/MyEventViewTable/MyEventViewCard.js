@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Card, CardBody} from "../../../../../../../_metronic/_partials/controls";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import {MyEventViewTable} from "./my-event-view-table/MyEventViewTable";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {getEnabledLocationListResultManager, getResultManagerTotalCameras} from "../../../_redux/MyEventViewApi";

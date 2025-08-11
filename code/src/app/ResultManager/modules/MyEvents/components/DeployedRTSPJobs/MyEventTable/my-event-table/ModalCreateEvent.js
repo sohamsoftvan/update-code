@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
-import { makeStyles } from "@mui/material/styles";
-import Card from "@mui/material/Card";
+import { makeStyles } from "@mui/styles";
+import {Card ,CardMedia ,CardContent ,Typography} from "@mui/material";
 import clsx from "clsx";
-import CardMedia from "@mui/material/CardMedia";
 import Boundingbox from "image-bounding-box-custom";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import moment from "moment";
 import BlockUi from "react-block-ui";
 import { connect } from "react-redux";

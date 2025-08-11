@@ -1,5 +1,5 @@
 import React from 'react';
-import Switch from "@mui/material/Switch/Switch";
+import {Switch} from "@mui/material";
 
 export default function CustomizedSwitch(props) {
     return (

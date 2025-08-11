@@ -21,7 +21,7 @@ import TableDropDownMenu from "./TableDropDownMenu";
 import CustomizedSwitch from "../CustomizedSwitch";
 import moment from "moment";
 import {StatusFormatter} from "../StatusFormatter";
-import Tooltip from "@mui/material/Tooltip";
+import {Tooltip} from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CustomizedButtons from "../CustomizedButtons";
 

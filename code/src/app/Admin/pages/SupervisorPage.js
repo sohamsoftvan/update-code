@@ -1,11 +1,7 @@
 import {
-  ContentRoute,
-  LayoutSplashScreen,
   useSubheader,
 } from "../../../_metronic/layout";
-import React, { Suspense } from "react";
-import { Switch } from "react-router-dom";
-import { ADMIN_URL } from "../../../enums/constant";
+import React from "react";
 import { SupervisorPage } from "../modules/AddSupervisor";
 
 export function Supervisor() {
@@ -13,13 +9,14 @@ export function Supervisor() {
   subheader.setTitle("Supervisor");
 
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        <ContentRoute
-          path={ADMIN_URL + "/addSupervisor"}
-          component={SupervisorPage}
-        />
-      </Switch>
-    </Suspense>
+      <SupervisorPage/>
+    // <Suspense fallback={<LayoutSplashScreen />}>
+    //   <Switch>
+    //     <ContentRoute
+    //       path={ADMIN_URL + "/addSupervisor"}
+    //       component={SupervisorPage}
+    //     />
+    //   </Switch>
+    // </Suspense>
   );
 }

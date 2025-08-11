@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Col, Form, Row} from "react-bootstrap";
-import Rating from '@mui/lab/Rating';
+import {Rating} from '@mui/material';
 import CommonModal from "../../../../../../utils/SuperAdmin/CommonModal";
 import BlockUi from "react-block-ui";
 
@@ -57,7 +57,7 @@ export function FeedbackEditForm({
                             <Form.Group controlId="ratings" as={Row}>
                                 <Form.Label column sm={12} className="text-center">
                                     <Rating
-                                        sizeLarge
+                                        size="large"
                                         name="ratings"
                                         value={formData.ratings}
                                         onChange={(event, newValue) => {

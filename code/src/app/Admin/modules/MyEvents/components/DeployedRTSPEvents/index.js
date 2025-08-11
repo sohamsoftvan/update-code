@@ -9,10 +9,11 @@ import { MyEventPage } from "./MyEventTable/MyEventPage";
 
 export default function DeployedRTSPEvents() {
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        <ContentRoute path={"/my-events"} component={MyEventPage} />
-      </Switch>
-    </Suspense>
+      <MyEventPage/>
+    // <Suspense fallback={<LayoutSplashScreen />}>
+    //   <Switch>
+    //     <ContentRoute path={"/my-events"} component={MyEventPage} />
+    //   </Switch>
+    // </Suspense>
   );
 }

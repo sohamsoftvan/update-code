@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardBody } from "../../../../../_metronic/_partials/controls";
 import { CompanyServiceTable } from "./company-service-details-table/CompanyServiceTable";
 import { Col, Row } from "reactstrap";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import { Form } from "react-bootstrap";
 import { warningToast } from "../../../../../utils/ToastMessage";
 import {
@@ -21,7 +21,7 @@ import {
   RadioGroup
 } from "@mui/material";
 import Popper from "@mui/material/Popper/Popper";
-import Tooltip from "@mui/material/Tooltip";
+import {Tooltip} from "@mui/material";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../../../../_metronic/_helpers";
 import BlockUi from "react-block-ui";

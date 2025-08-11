@@ -7,14 +7,15 @@ import MyAllCameraStatus from "../modules/AllCameraStatusTable";
 function AllCameraStatusPage() {
   return (
     <div>
-      <Suspense fallback={<LayoutSplashScreen />}>
-        <Switch>
-          <ContentRoute
-            path={ADMIN_URL + "/camera-status"}
-            component={MyAllCameraStatus}
-          />
-        </Switch>
-      </Suspense>
+        <MyAllCameraStatus/>
+      {/*<Suspense fallback={<LayoutSplashScreen />}>*/}
+      {/*  <Switch>*/}
+      {/*    <ContentRoute*/}
+      {/*      path={ADMIN_URL + "/camera-status"}*/}
+      {/*      component={MyAllCameraStatus}*/}
+      {/*    />*/}
+      {/*  </Switch>*/}
+      {/*</Suspense>*/}
     </div>
   );
 }

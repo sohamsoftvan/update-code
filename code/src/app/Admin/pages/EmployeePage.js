@@ -13,14 +13,15 @@ export function EmployeePage() {
   subheader.setTitle("Employee");
 
   return (
+      <EmployeeIndexPage/>
     //<Supervisors/>
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        <ContentRoute
-          path={ADMIN_URL + "/employee"}
-          component={EmployeeIndexPage}
-        />
-      </Switch>
-    </Suspense>
+    // <Suspense fallback={<LayoutSplashScreen />}>
+    //   <Switch>
+    //     <ContentRoute
+    //       path={ADMIN_URL + "/employee"}
+    //       component={EmployeeIndexPage}
+    //     />
+    //   </Switch>
+    // </Suspense>
   );
 }

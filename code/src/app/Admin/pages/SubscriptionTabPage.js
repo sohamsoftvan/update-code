@@ -1,15 +1,15 @@
 import React, { Suspense, useEffect } from "react";
 import { LayoutSplashScreen } from "../../../_metronic/layout";
-import { RequestedResults } from "../modules/Subscriptions";
+import RequestedResults from "../modules/Subscriptions";
 import { ADMIN_URL } from "../../../enums/constant";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SubscriptionTabPage() {
-  const history = useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
-    history.push(ADMIN_URL + "/subscriptions/deployedJobsPage");
+    navigate(ADMIN_URL + "/subscriptions/deployedJobsPage");
     // eslint-disable-next-line
-  }, []);
+  }, [navigate]);
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
       <RequestedResults />

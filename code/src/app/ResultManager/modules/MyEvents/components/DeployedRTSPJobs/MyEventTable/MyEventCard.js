@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Card, CardBody,} from "../../../../../../../_metronic/_partials/controls";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import {MyEventTable} from "./my-event-table/MyEventsTable";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {getAllLabelsFromUserId} from "../../../../../../Admin/modules/Subscriptions/_redux/DeployedRTSPJobs/DeployedRTSPJobsApi";

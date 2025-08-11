@@ -1,9 +1,6 @@
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
+import {Card ,CardMedia ,CardContent ,Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import clsx from "clsx";
 import Boundingbox from "image-bounding-box-custom";
 import moment from "moment";

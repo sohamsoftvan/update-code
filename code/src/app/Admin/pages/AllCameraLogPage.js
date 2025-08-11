@@ -7,14 +7,15 @@ import MyAllCameraLog from "../modules/AllCameraLogTable";
 function AllCameraLogPage(props) {
   return (
     <div>
-      <Suspense fallback={<LayoutSplashScreen />}>
-        <Switch>
-          <ContentRoute
-            path={ADMIN_URL + "/camera-logs"}
-            component={MyAllCameraLog}
-          />
-        </Switch>
-      </Suspense>
+        <MyAllCameraLog/>
+      {/*<Suspense fallback={<LayoutSplashScreen />}>*/}
+      {/*  <Switch>*/}
+      {/*    <ContentRoute*/}
+      {/*      path={ADMIN_URL + "/camera-logs"}*/}
+      {/*      component={MyAllCameraLog}*/}
+      {/*    />*/}
+      {/*  </Switch>*/}
+      {/*</Suspense>*/}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Col, Row} from "react-bootstrap";
-import {makeStyles} from "@mui/material/styles";
+import {makeStyles} from "@mui/styles";
 import {NotificationSendCardUI} from "./NotificationSendCardUI";
 import {sendWhatsappMessaage} from "../../_redux";
 import {successToast, warningToast} from "../../../../../../utils/ToastMessage";

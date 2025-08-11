@@ -3,9 +3,8 @@ import { useJsonToCsv } from "react-json-csv";
 import * as PropTypes from "prop-types";
 import CustomizedButtons from "./SuperAdmin/CustomizedButtons";
 
-const { saveAsCsv } = useJsonToCsv();
-
 export function CSVDownloader(props) {
+  const { saveAsCsv } = useJsonToCsv();
   let { data = [], fields = {}, filename = "", className , buttonName } = props;
   return (
     <div className={className}>

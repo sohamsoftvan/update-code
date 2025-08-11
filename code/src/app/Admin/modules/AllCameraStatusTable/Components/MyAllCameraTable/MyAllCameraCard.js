@@ -3,7 +3,7 @@ import {
     Col,
     Row,
 } from "react-bootstrap";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import {warningToast} from "../../../../../../utils/ToastMessage";
 import {MyAllCameraStatusTable} from "./MyAllCameraStatusTable";
 import {getAllCameraStatus} from "../../_redux/MyAllCameraApi";

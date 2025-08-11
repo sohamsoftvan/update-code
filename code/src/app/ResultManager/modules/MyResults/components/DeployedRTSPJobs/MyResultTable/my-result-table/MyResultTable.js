@@ -8,7 +8,7 @@ import {  useDispatch } from "react-redux";
 import * as actions from "../../../../_redux/MyResultAction";
 import { Col, Row } from "reactstrap";
 import { MyResultCardsUI } from "./MyResultCardsUI";
-import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 // eslint-disable-next-line
 let currentPage = 0;

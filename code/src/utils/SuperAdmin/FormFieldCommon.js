@@ -1,6 +1,5 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
-import {IconButton, InputAdornment} from "@mui/material";
+import {IconButton, InputAdornment ,TextField} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 const CommonInputAdornment = ({showPassword, onClick}) => (

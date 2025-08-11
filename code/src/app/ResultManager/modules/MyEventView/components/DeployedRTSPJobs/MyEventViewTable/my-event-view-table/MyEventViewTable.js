@@ -8,7 +8,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../../_redux/MyEventViewAction";
 import { Col, Row } from "reactstrap";
 import { MyEventViewCardsUI } from "./MyEventViewCardsUI";
-import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 import InfiniteScroll from "react-infinite-scroll-component";
 // eslint-disable-next-line
 let currentPage = 0;

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "reactstrap";
 import {Card, CardBody} from "../../../../../_metronic/_partials/controls";
-import CardHeader from "@mui/material/CardHeader";
 import { toAbsoluteUrl } from "../../../../../_metronic/_helpers";
 import * as actions from "../_redux/CameraAction";
 import { useDispatch } from "react-redux";
-import CardMedia from "@mui/material/CardMedia";
+import {CardMedia ,CardHeader} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { loadImageFromRtspURL } from "../_redux/CameraAPI";
 import ImageGridLoader from "../../../../../utils/SuperAdmin/Loader/ImageGridLoader";

@@ -1,8 +1,6 @@
 // CommaChipAutocomplete.js
 import React from "react";
-import {Autocomplete} from "@mui/lab";
-import TextField from "@mui/material/TextField";
-import {Chip} from "@mui/material";
+import {TextField ,Chip ,Autocomplete} from "@mui/material";
 
 const CommaChipAutocomplete = ({
                                    value,

@@ -5,7 +5,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { getTotalCamerasByLocationId } from "../../../DashboardGraph/_redux";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import { getEnabledLocationList } from "../../../AddSupervisor/_redux";
 import { warningToast } from "../../../../../../utils/ToastMessage";
 import { shallowEqual, useSelector } from "react-redux";

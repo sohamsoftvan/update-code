@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Card, CardBody} from "../../../../../_metronic/_partials/controls";
 import {Col, Row} from "reactstrap";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import CustomizedButtons from "../../../../../utils/SuperAdmin/CustomizedButtons";
 import {CameraLabelMappingEditDialog} from "./CameraLabelMappingEditDialog";
 import CameraLabelMappingTable from "./CameraLabelMappingTable";

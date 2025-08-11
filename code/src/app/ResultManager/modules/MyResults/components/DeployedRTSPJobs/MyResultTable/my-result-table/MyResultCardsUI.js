@@ -1,9 +1,6 @@
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
+import {Card ,CardMedia ,CardContent ,Typography} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import { useDispatch } from "react-redux";
 import Boundingbox from "image-bounding-box-custom";
@@ -22,7 +19,7 @@ import {
 } from "reactstrap";
 import moment from "moment";
 import { Col, InputGroup, Row } from "react-bootstrap";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Dropdown } from "react-bootstrap";
 import objectAssign from "object-assign";
 import { RegionSelect } from "./Region_Lib/RegionSelect";
 import BootstrapTable from "react-bootstrap-table-next";

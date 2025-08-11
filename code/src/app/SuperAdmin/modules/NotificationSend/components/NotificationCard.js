@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardBody } from "../../../../../_metronic/_partials/controls";
 import { NotificationServiceTable } from "./company-service-details-table/NotificationServiceTable";
 import { Col, Row } from "reactstrap";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import { warningToast } from "../../../../../utils/ToastMessage";
 import {getResultForWhatsapp} from "../_redux";
 

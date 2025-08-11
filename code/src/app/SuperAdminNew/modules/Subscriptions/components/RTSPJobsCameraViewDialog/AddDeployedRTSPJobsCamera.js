@@ -6,7 +6,7 @@ import CustomizedButtons from "../../../../../../utils/SuperAdmin/CustomizedButt
 import ReactSelectDropDownCommon from "../../../../../../utils/SuperAdmin/ReactSelectDropDownCommon";
 import CommonModal from "../../../../../../utils/SuperAdmin/CommonModal";
 import FormFieldCommon from "../../../../../../utils/SuperAdmin/FormFieldCommon";
-import Form from 'react-bootstrap/Form';
+import { Form } from 'react-bootstrap';
 
 const AddDeployedRTSPJobsCamera = (props) => {
     const [rtsp_url, setRtspUrl] = useState(null);

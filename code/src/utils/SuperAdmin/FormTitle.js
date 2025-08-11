@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import Typography from "@mui/material/Typography";
+import {Typography} from "@mui/material";
 import {Edit} from "@mui/icons-material";
 
 const FormTitle = ({title, variant, sx, className, color, align, optional,link ,linkVariant ,linkTo,linkTittle,additionalContent ,isEditing,handleEdit}) => {
