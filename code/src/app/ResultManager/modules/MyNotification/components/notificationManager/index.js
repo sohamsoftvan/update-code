@@ -1,14 +1,18 @@
 import React, { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { LayoutSplashScreen } from "../../../../../../_metronic/layout";
-import NotificationManagerPage from "./NotificationManagerPage";
 
-export default function NotificationManagerIndex() {
-  return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Routes>
-        <Route path="/" element={<NotificationManagerPage />} />
-      </Routes>
-    </Suspense>
-  );
+import {
+    ContentRoute,
+    LayoutSplashScreen,
+} from "../../../../../../_metronic/layout";
+import { MyNotificationViewPage} from "./MyNotificationViewTable/MyNotificationViewPage";
+
+export default function NotificationAlert() {
+    return (
+        <MyNotificationViewPage/>
+        // <Suspense fallback={<LayoutSplashScreen />}>
+        //     <Switch>
+        //         <ContentRoute path={"/notificationAlert"} component={MyNotificationViewPage} />
+        //     </Switch>
+        // </Suspense>
+    );
 }

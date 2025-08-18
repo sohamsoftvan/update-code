@@ -17,6 +17,7 @@ export function DeviceCard() {
     };
   }, [deviceUIContext]);
 
+  console.log("page open ")
   return (
     <Card>
       <CardHeader title="Device Data">

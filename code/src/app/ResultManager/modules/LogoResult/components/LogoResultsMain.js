@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {CardBody, Col, Row} from "reactstrap";
 import { Form} from "react-bootstrap";
-import CardHeader from "@mui/material/CardHeader";
 import Creatable from 'react-select/creatable';
 import FormDateRangePicker from "../../../../../utils/dateRangePicker/FormDateRangePicker";
 import moment from "moment/moment";
@@ -10,7 +9,7 @@ import getSelectedDateTimeDefaultValue from "../../../../../utils/dateRangePicke
 import getSelectedDateTimeDefaultValueForRange from "../../../../../utils/dateRangePicker/dateRangeFunctions";
 import SVG from "react-inlinesvg";
 import {toAbsoluteUrl} from "../../../../../_metronic/_helpers";
-import {Card} from "@mui/material";
+import {Card ,CardHeader} from "@mui/material";
 import '../../../../../scss/components/logo.scss'
 import '../../../../../scss/components/image-gallery.css'
 import "react-image-gallery/styles/css/image-gallery.css";

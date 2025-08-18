@@ -4,9 +4,9 @@ import {MyNotificationView} from "../modules/MyNotification";
 
 function MyNotificationTabPage() {
     return (
-        <Suspense fallback={<LayoutSplashScreen />}>
+        // <Suspense fallback={<LayoutSplashScreen />}>
             <MyNotificationView />
-        </Suspense>
+        // </Suspense>
     );
 }
 

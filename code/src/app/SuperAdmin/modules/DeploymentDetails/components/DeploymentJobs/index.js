@@ -1,29 +1,22 @@
 import React, { Suspense } from "react";
 import { DeploymentJobsPage } from "./DeploymentJobTable/DeploymentJobsPage";
-
-import {
-  ContentRoute,
-  LayoutSplashScreen
-} from "../../../../../../_metronic/layout";
-import { Redirect, Switch } from "react-router-dom";
+import { LayoutSplashScreen } from "../../../../../../_metronic/layout";
+import { Navigate, Routes, Route } from "react-router-dom";
 
 export default function DeploymentJobs({ setKey }) {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        {
-          /* Redirect from /deploymentJobs root URL to /deploymentJobs/deploymentJobsPage */
-          <Redirect
-            exact={true}
-            from="/deploymentDetails"
-            to="/deploymentDetails/deploymentJobsPage"
-          />
-        }
-        <ContentRoute
-          path="/deploymentDetails/deploymentJobsPage"
-          children={<DeploymentJobsPage setKey={setKey} />}
+      <Routes>
+        {/* Redirect from /deploymentDetails root URL to /deploymentDetails/deploymentJobsPage */}
+        <Route
+          path="/deploymentDetails"
+          element={<Navigate to="/deploymentDetails/deploymentJobsPage" replace />}
         />
-      </Switch>
+        <Route
+          path="/deploymentDetails/deploymentJobsPage/*"
+          element={<DeploymentJobsPage setKey={setKey} />}
+        />
+      </Routes>
     </Suspense>
   );
 }

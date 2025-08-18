@@ -4,8 +4,8 @@ import {MyEvents} from "../modules/MyEvents";
 
 export default function MyEventsTabPage() {
     return (
-        <Suspense fallback={<LayoutSplashScreen />}>
+        // <Suspense fallback={<LayoutSplashScreen />}>
             <MyEvents/>
-        </Suspense>
+        // </Suspense>
     );
 }

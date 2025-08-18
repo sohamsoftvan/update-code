@@ -1,17 +1,17 @@
 import React, { Suspense } from "react";
-import { ContentRoute, LayoutSplashScreen } from "../../../../_metronic/layout";
-import { Switch } from "react-router-dom";
+import { LayoutSplashScreen } from "../../../../_metronic/layout";
+import { Routes, Route } from "react-router-dom";
 import {NotificationSendPage} from "./components/NotificationSendPage";
 
 export default function NotificationSend() {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        <ContentRoute
+      <Routes>
+        <Route
           path={"/NotificationSend"}
-          component={NotificationSendPage}
+          element={<NotificationSendPage />}
         />
-      </Switch>
+      </Routes>
     </Suspense>
   );
 }

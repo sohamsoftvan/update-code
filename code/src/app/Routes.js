@@ -26,9 +26,9 @@ function Router() {
             case ADMIN_ROLE:
                 return "/admin/dashboard";
             case SUPER_ADMIN_ROLE:
-                return "/superadmin/dashboard";
+                return "/dashboard";
             case RESULT_MANAGER_ROLE:
-                return "/resultmanager/dashboard";
+                return "/my-results";
             default:
                 return "/auth/login";
         }

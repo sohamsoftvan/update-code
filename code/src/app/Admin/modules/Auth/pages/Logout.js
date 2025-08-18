@@ -19,7 +19,7 @@ class Logout extends Component {
     } else {
       // No tokens found, user is already logged out, just redirect
       this.props.logout();
-      window.location.href = "#/auth/login";
+      <Navigate to="/auth/login" replace />
     }
   }
 

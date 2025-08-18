@@ -1,4 +1,4 @@
-import { Route, useHistory } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import { DeploymentJobsUIProvider } from "./DeploymentJobsUIContext";
 import { DeploymentJobsCard } from "./DeploymentJobsCard";
@@ -6,9 +6,58 @@ import { DeploymentJobNewDialog } from "./deployment-job-new-dialog/DeploymentJo
 import { DeploymentJobsViewDialog } from "./deployment-job-view-dialog/DeploymentJobsViewDialog";
 import { DeploymentJobStartDialog } from "./deployment-job-start-dialog/DeploymentJobStartDialog";
 
+// Component for handling new dialog
+function DeploymentJobNewDialogWrapper() {
+  const navigate = useNavigate();
+  const deploymentJobsPageBaseUrl = "/deploymentDetails/deploymentJobsPage";
+
+  return (
+    <DeploymentJobNewDialog
+      show={true}
+      onHide={() => {
+        navigate(deploymentJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
+// Component for handling view dialog with route params
+function DeploymentJobsViewDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const deploymentJobsPageBaseUrl = "/deploymentDetails/deploymentJobsPage";
+
+  return (
+    <DeploymentJobsViewDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(deploymentJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
+// Component for handling start dialog with route params
+function DeploymentJobStartDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const deploymentJobsPageBaseUrl = "/deploymentDetails/deploymentJobsPage";
+
+  return (
+    <DeploymentJobStartDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(deploymentJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
 export function DeploymentJobsPage({ setKey }) {
   const deploymentJobsPageBaseUrl = "/deploymentDetails/deploymentJobsPage";
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(
     () => setKey("deploymentJobs"),
@@ -18,50 +67,23 @@ export function DeploymentJobsPage({ setKey }) {
 
   const deploymentJobsUIEvents = {
     newDeploymentJobBtnClick: () => {
-      history.push(`${deploymentJobsPageBaseUrl}/new`);
+      navigate(`${deploymentJobsPageBaseUrl}/new`);
     },
     openViewDeploymentJobBtnClick: id => {
-      history.push(`${deploymentJobsPageBaseUrl}/${id}/view`);
+      navigate(`${deploymentJobsPageBaseUrl}/${id}/view`);
     },
     startDeploymentJobBtnClick: id => {
-      history.push(`${deploymentJobsPageBaseUrl}/${id}/deploy`);
+      navigate(`${deploymentJobsPageBaseUrl}/${id}/deploy`);
     }
   };
 
   return (
     <DeploymentJobsUIProvider deploymentJobsUIEvents={deploymentJobsUIEvents}>
-      <Route path={`${deploymentJobsPageBaseUrl}/new`}>
-        {({ history, match }) => (
-          <DeploymentJobNewDialog
-            show={match != null}
-            onHide={() => {
-              history.push(deploymentJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${deploymentJobsPageBaseUrl}/:id/view`}>
-        {({ history, match }) => (
-          <DeploymentJobsViewDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(deploymentJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${deploymentJobsPageBaseUrl}/:id/deploy`}>
-        {({ history, match }) => (
-          <DeploymentJobStartDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(deploymentJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
+      <Routes>
+        <Route path={`${deploymentJobsPageBaseUrl}/new`} element={<DeploymentJobNewDialogWrapper />} />
+        <Route path={`${deploymentJobsPageBaseUrl}/:id/view`} element={<DeploymentJobsViewDialogWrapper />} />
+        <Route path={`${deploymentJobsPageBaseUrl}/:id/deploy`} element={<DeploymentJobStartDialogWrapper />} />
+      </Routes>
       <DeploymentJobsCard />
     </DeploymentJobsUIProvider>
   );

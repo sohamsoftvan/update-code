@@ -1,13 +1,47 @@
-import { Route, useHistory } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import { DeployedJobsUIProvider } from "./DeployedJobsUIContext";
 import { DeployedJobsCard } from "./DeployedJobsCard";
 import { DeployedJobsViewDialog } from "./deployed-job-view-dialog/DeployedJobsViewDialog";
 import { DeploymentJobTerminateDialog } from "./deployed-job-terminate-dialog/DeployedJobTerminateDialog";
 
+// Component for handling view dialog with route params
+function DeployedJobsViewDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const deployedJobsPageBaseUrl = "/deployedDetails/deployedJobsPage";
+
+  return (
+    <DeployedJobsViewDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(deployedJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
+// Component for handling terminate dialog with route params
+function DeploymentJobTerminateDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const deployedJobsPageBaseUrl = "/deployedDetails/deployedJobsPage";
+
+  return (
+    <DeploymentJobTerminateDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(deployedJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
 export function DeployedJobsPage({ setKey }) {
   const deployedJobsPageBaseUrl = "/deployedDetails/deployedJobsPage";
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(
     () => setKey("deployedJobs"),
@@ -17,37 +51,19 @@ export function DeployedJobsPage({ setKey }) {
 
   const deployedJobsUIEvents = {
     openViewDeployedJobBtnClick: id => {
-      history.push(`${deployedJobsPageBaseUrl}/${id}/view`);
+      navigate(`${deployedJobsPageBaseUrl}/${id}/view`);
     },
     stopDeploymentJobBtnClick: id => {
-      history.push(`${deployedJobsPageBaseUrl}/${id}/terminate`);
+      navigate(`${deployedJobsPageBaseUrl}/${id}/terminate`);
     }
   };
 
   return (
     <DeployedJobsUIProvider deployedJobsUIEvents={deployedJobsUIEvents}>
-      <Route path={`${deployedJobsPageBaseUrl}/:id/view`}>
-        {({ history, match }) => (
-          <DeployedJobsViewDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(deployedJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${deployedJobsPageBaseUrl}/:id/terminate`}>
-        {({ history, match }) => (
-          <DeploymentJobTerminateDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(deployedJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
+      <Routes>
+        <Route path={`${deployedJobsPageBaseUrl}/:id/view`} element={<DeployedJobsViewDialogWrapper />} />
+        <Route path={`${deployedJobsPageBaseUrl}/:id/terminate`} element={<DeploymentJobTerminateDialogWrapper />} />
+      </Routes>
       <DeployedJobsCard />
     </DeployedJobsUIProvider>
   );

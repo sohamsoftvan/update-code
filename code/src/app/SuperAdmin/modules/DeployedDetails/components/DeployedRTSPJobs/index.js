@@ -1,21 +1,17 @@
 import React, { Suspense } from "react";
 import { DeployedRTSPJobsPage } from "./DeployedRTSPJobTable/DeployedRTSPJobsPage";
-
-import {
-  ContentRoute,
-  LayoutSplashScreen
-} from "../../../../../../_metronic/layout";
-import { Switch } from "react-router-dom";
+import { LayoutSplashScreen } from "../../../../../../_metronic/layout";
+import { Routes, Route } from "react-router-dom";
 
 export default function DeployedRTSPJobs({ setKey }) {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        <ContentRoute
-          path="/deployedDetails/deployedRTSPJobsPage"
-          children={<DeployedRTSPJobsPage setKey={setKey} />}
+      <Routes>
+        <Route
+          path="/deployedDetails/deployedRTSPJobsPage/*"
+          element={<DeployedRTSPJobsPage setKey={setKey} />}
         />
-      </Switch>
+      </Routes>
     </Suspense>
   );
 }

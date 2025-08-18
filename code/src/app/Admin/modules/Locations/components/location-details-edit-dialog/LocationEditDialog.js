@@ -4,10 +4,10 @@ import { LocationEditForm } from "./LocationEditForm";
 import * as action from "../../_redux/LocationAction";
 import { LocationSlice } from "../../_redux/LocationSlice";
 import { addNotification } from "../../../Notification/_redux/notification";
-
+import {useParams} from "react-router-dom";
 const { actions } = LocationSlice;
 
-export function LocationEditDialog({ id, show, onHide }) {
+export function LocationEditDialog({ show, onHide }) {
   const { actionsLoading, locationFetchedById } = useSelector(
     (state) => ({
       actionsLoading: state.location.actionsLoading,
@@ -15,6 +15,7 @@ export function LocationEditDialog({ id, show, onHide }) {
     }),
     shallowEqual
   );
+  const { id } = useParams();
 
   const dispatch = useDispatch();
 

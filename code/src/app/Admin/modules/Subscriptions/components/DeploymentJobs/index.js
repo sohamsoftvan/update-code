@@ -9,11 +9,12 @@ import { ADMIN_URL } from "../../../../../../enums/constant";
 
 export default function DeploymentJobs({ setKey }) {
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <ContentRoute
-        path={ADMIN_URL + "/subscriptions/deploymentJobsPage"}
-        children={<DeploymentJobsPage setKey={setKey} />}
-      />
-    </Suspense>
+      <DeploymentJobsPage setKey={setKey} />
+    // <Suspense fallback={<LayoutSplashScreen />}>
+    //   <ContentRoute
+    //     path={ADMIN_URL + "/subscriptions/deploymentJobsPage"}
+    //     children={<DeploymentJobsPage setKey={setKey} />}
+    //   />
+    // </Suspense>
   );
 }

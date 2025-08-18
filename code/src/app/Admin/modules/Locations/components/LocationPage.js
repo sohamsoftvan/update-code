@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { LocationUIProvider } from "./LocationUIContext";
 import { LocationCard } from "./LocationCard";
 import { LocationEditDialog } from "./location-details-edit-dialog/LocationEditDialog";
@@ -8,13 +8,13 @@ import { ADMIN_URL } from "../../../../../enums/constant";
 export function LocationPage() {
     const navigate = useNavigate();
     const locationPageBaseUrl = ADMIN_URL + "/locations";
-    const { id } = useParams();
+
     const locationUIEvents = {
         newLocationBtnClick: () => {
             navigate(`${locationPageBaseUrl}/new`);
         },
-        editLocationBtnClick: (ids) => {
-            navigate(`${locationPageBaseUrl}/${ids}/edit`);
+        editLocationBtnClick: (id) => {
+            navigate(`${locationPageBaseUrl}/${id}/edit`);
         },
     };
 
@@ -37,7 +37,6 @@ export function LocationPage() {
                     path=":id/edit"
                     element={<LocationEditDialog
                         show={true}
-                        id={id}
                         onHide={() => navigate(locationPageBaseUrl)}
                     />}
                 />

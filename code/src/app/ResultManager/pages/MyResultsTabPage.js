@@ -4,8 +4,8 @@ import { MyResults } from "../modules/MyResults";
 
 export default function MyResultsTabPage() {
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
+    // <Suspense fallback={<LayoutSplashScreen />}>
       <MyResults />
-    </Suspense>
+    // {/*</Suspense>*/}
   );
 }

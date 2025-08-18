@@ -1,57 +1,57 @@
-import {Route} from "react-router-dom";
 import React from "react";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import {MyResultUIProvider} from "./MyResultUIContext";
 import {MyResultCard} from "./MyResultCard"
 import {MyResultViewDialog} from "./my-result-view-dialog/MyResultViewDialog";
 import {ResultStatusDialog} from "./result-status-dialog/ResultStatusDialog";
 
-export function MyResultPage({history}) {
-
-    const myResultPageBaseUrl = '/my-results';
-
+export function MyResultPage() {
+    const navigate = useNavigate();
+    const myResultPageBaseUrl = "/my-results";
 
     const myResultUIEvents = {
         openViewMyResultBtnClick: (id) => {
-            history.push(`${myResultPageBaseUrl}/${id}/view`);
+            navigate(`${id}/view`);
         },
         openChangeStatusBtnClick: (id, status) => {
-            history.push(`${myResultPageBaseUrl}/${id}/${status}/changeStatus`);
+            navigate(`${id}/${status}/changeStatus`);
         },
         openCardsClick: (data) => {
-            history.push(`${myResultPageBaseUrl}/${data}/cards`);
-        }
+            navigate(`${data}/cards`);
+        },
+    };
+
+    const ViewDialogRoute = () => {
+        const { id } = useParams();
+        return (
+            <MyResultViewDialog
+                show={true}
+                id={id}
+                onHide={() => navigate(myResultPageBaseUrl)}
+            />
+        );
+    };
+
+    const ChangeStatusDialogRoute = () => {
+        const { id, status } = useParams();
+        return (
+            <ResultStatusDialog
+                show={true}
+                id={id}
+                status={status}
+                onHide={() => navigate(myResultPageBaseUrl)}
+            />
+        );
     };
 
     return (
         <MyResultUIProvider myResultUIEvents={myResultUIEvents}>
-            <Route exact path={`${myResultPageBaseUrl}/:id/view`}>
-                {({history, match}) => (
-                    <MyResultViewDialog
-                        show={match != null}
-                        id={match?.params.id}
-                        onHide={() => {
-                            history.push(myResultPageBaseUrl);
-                        }}
-                    />
-                )}
-            </Route>
-            <Route exact path={`${myResultPageBaseUrl}/:id/:status/changeStatus`}>
-                {({history, match}) => (
-                    <>
-                        <ResultStatusDialog
-                            show={match != null}
-                            id={match?.params?.id}
-                            status={match?.params?.status}
-                            onHide={() => {
-                                history.push(myResultPageBaseUrl);
-                            }}
-                        />
-                    </>
-                )}
-            </Route>
-            <Route exact path={`${myResultPageBaseUrl}`}>
-                <MyResultCard/>
-            </Route>
+            <Routes>
+                <Route path=":id/view" element={<ViewDialogRoute />} />
+                <Route path=":id/:status/changeStatus" element={<ChangeStatusDialogRoute />} />
+                <Route index element={<MyResultCard />} />
+                <Route path="" element={<MyResultCard />} />
+            </Routes>
         </MyResultUIProvider>
     );
 }

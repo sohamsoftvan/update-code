@@ -4,15 +4,15 @@ import {
   ContentRoute,
   LayoutSplashScreen,
 } from "../../../../../../_metronic/layout";
-import { Switch } from "react-router-dom";
 import { MyEventViewPage } from "./MyEventViewTable/MyEventViewPage";
 
-export default function DeployedRTSPJobs() {
+export default function DeployedRTSPEventView() {
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        <ContentRoute path={"/eventsList"} component={MyEventViewPage} />
-      </Switch>
-    </Suspense>
+      <MyEventViewPage/>
+    // <Suspense fallback={<LayoutSplashScreen />}>
+    // {/*  <Switch>*/}
+    // {/*    <ContentRoute path={"/eventsList"} component={MyEventViewPage} />*/}
+    // {/*  </Switch>*/}
+    // {/*</Suspense>*/}
   );
 }

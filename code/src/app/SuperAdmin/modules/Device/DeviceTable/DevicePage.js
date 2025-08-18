@@ -1,60 +1,77 @@
-import { Route } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import { DeviceUIProvider } from "./DeviceUIContext";
 import { DeviceCard } from "./DeviceCard";
 import { DeviceEditDialog } from "./device-edit-dialog/DeviceEditDialog";
 import { DeviceStatusDialog } from "./device-status-dialog/DeviceStatusDialog";
 
-export function DevicePage({ history }) {
+function DeviceNewDialogWrapper() {
+  const navigate = useNavigate();
   const devicePageBaseUrl = "/device/devicePage";
+  return (
+    <DeviceEditDialog
+      show={true}
+      onHide={() => {
+        navigate(devicePageBaseUrl);
+      }}
+    />
+  );
+}
+
+function DeviceEditDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const devicePageBaseUrl = "/device/devicePage";
+  return (
+    <DeviceEditDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(devicePageBaseUrl);
+      }}
+    />
+  );
+}
+
+function DeviceStatusDialogWrapper() {
+  const { id, status } = useParams();
+  const navigate = useNavigate();
+  const devicePageBaseUrl = "/device/devicePage";
+  return (
+    <DeviceStatusDialog
+      show={true}
+      id={id}
+      status={status}
+      onHide={() => {
+        navigate(devicePageBaseUrl);
+      }}
+    />
+  );
+}
+
+export function DevicePage() {
+  const devicePageBaseUrl = "/device/devicePage";
+  const navigate = useNavigate();
 
   const deviceUIEvents = {
     newDeviceButtonClick: () => {
-      history.push(`${devicePageBaseUrl}/new`);
+      navigate(`${devicePageBaseUrl}/new`);
     },
     editDeviceButtonClick: id => {
-      history.push(`${devicePageBaseUrl}/${id}/edit`);
+      navigate(`${devicePageBaseUrl}/${id}/edit`);
     },
     changeDeviceStatusButtonClick: (id, status) => {
-      history.push(`${devicePageBaseUrl}/${id}/${status}/changeStatus`);
+      navigate(`${devicePageBaseUrl}/${id}/${status}/changeStatus`);
     }
   };
 
   return (
     <DeviceUIProvider deviceUIEvents={deviceUIEvents}>
-      <Route path={`${devicePageBaseUrl}/new`}>
-        {({ history, match }) => (
-          <DeviceEditDialog
-            show={match != null}
-            onHide={() => {
-              history.push(devicePageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${devicePageBaseUrl}/:id/edit`}>
-        {({ history, match }) => (
-          <DeviceEditDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(devicePageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${devicePageBaseUrl}/:id/:status/changeStatus`}>
-        {({ history, match }) => (
-          <DeviceStatusDialog
-            show={match != null}
-            id={match?.params?.id}
-            status={match?.params?.status}
-            onHide={() => {
-              history.push(devicePageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
+      <Routes>
+        <Route path={`new`} element={<DeviceNewDialogWrapper />} />
+        <Route path={`:id/edit`} element={<DeviceEditDialogWrapper />} />
+        <Route path={`:id/:status/changeStatus`} element={<DeviceStatusDialogWrapper />} />
+      </Routes>
       <DeviceCard />
     </DeviceUIProvider>
   );

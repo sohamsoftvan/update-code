@@ -1,17 +1,18 @@
 import React, { Suspense } from "react";
-import { ContentRoute, LayoutSplashScreen } from "../../../../_metronic/layout";
-import { Switch } from "react-router-dom";
+import { LayoutSplashScreen } from "../../../../_metronic/layout";
+import { Routes, Route } from "react-router-dom";
 import {AllCameraStatusPage} from "./components/AllCameraStatusPage";
 
 export default function AllCameraStatus() {
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        <ContentRoute
-          path={"/camera-status"}
-          component={AllCameraStatusPage}
-        />
-      </Switch>
-    </Suspense>
+      <AllCameraStatusPage />
+    // <Suspense fallback={<LayoutSplashScreen />}>
+    //   <Routes>
+    //     <Route
+    //       path={"/camera-status"}
+    //       element={<AllCameraStatusPage />}
+    //     />
+    //   </Routes>
+    // </Suspense>
   );
 }

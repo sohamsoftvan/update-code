@@ -10,7 +10,7 @@ import {
     AllLocationOption,
     AllModalOption
 } from "../../../../../utils/SuperAdmin/enums/CompanyOption";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import AllCameraTable from "./AllCameraTable";
 import {CommonCSVDownloader} from "../../../../../utils/SuperAdmin/CommonCSVDownloader";
 

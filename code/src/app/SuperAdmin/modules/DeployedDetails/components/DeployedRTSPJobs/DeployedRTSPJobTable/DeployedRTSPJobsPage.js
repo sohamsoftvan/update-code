@@ -1,4 +1,4 @@
-import { Route, useHistory } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import { DeployedRTSPJobsUIProvider } from "./DeployedRTSPJobsUIContext";
 import { DeployedRTSPJobsCard } from "./DeployedRTSPJobsCard";
@@ -7,9 +7,77 @@ import { DeploymentRTSPJobTerminateDialog } from "./deployed-rtsp-job-terminate-
 import { DeployedRTSPJobsLabelSettingsDialog } from "./deployed-rstp-job-label-settings-dialog/DeployedRTSPJobsLabelSettingsDialog";
 import { DeployedRTSPJobsCameraSettingsDialog } from "./deployed-rstp-job-camera-settings-dialog/DeployedRTSPJobsCameraSettingsDialog";
 
+// Component for handling view dialog with route params
+function DeployedRTSPJobsViewDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const deployedRTSPJobsPageBaseUrl = "/deployedDetails/deployedRTSPJobsPage";
+
+  return (
+    <DeployedRTSPJobsViewDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(deployedRTSPJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
+// Component for handling terminate dialog with route params
+function DeploymentRTSPJobTerminateDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const deployedRTSPJobsPageBaseUrl = "/deployedDetails/deployedRTSPJobsPage";
+
+  return (
+    <DeploymentRTSPJobTerminateDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(deployedRTSPJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
+// Component for handling label settings dialog with route params
+function DeployedRTSPJobsLabelSettingsDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const deployedRTSPJobsPageBaseUrl = "/deployedDetails/deployedRTSPJobsPage";
+
+  return (
+    <DeployedRTSPJobsLabelSettingsDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(deployedRTSPJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
+// Component for handling camera settings dialog with route params
+function DeployedRTSPJobsCameraSettingsDialogWrapper() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const deployedRTSPJobsPageBaseUrl = "/deployedDetails/deployedRTSPJobsPage";
+
+  return (
+    <DeployedRTSPJobsCameraSettingsDialog
+      show={true}
+      id={id}
+      onHide={() => {
+        navigate(deployedRTSPJobsPageBaseUrl);
+      }}
+    />
+  );
+}
+
 export function DeployedRTSPJobsPage({ setKey }) {
   const deployedRTSPJobsPageBaseUrl = "/deployedDetails/deployedRTSPJobsPage";
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(
     () => setKey("deployedRTSPJobs"),
@@ -19,16 +87,16 @@ export function DeployedRTSPJobsPage({ setKey }) {
 
   const deployedRTSPJobsUIEvents = {
     openViewDeployedRTSPJobBtnClick: id => {
-      history.push(`${deployedRTSPJobsPageBaseUrl}/${id}/view`);
+      navigate(`${deployedRTSPJobsPageBaseUrl}/${id}/view`);
     },
     openViewLabelSettingsBtnClick: id => {
-      history.push(`${deployedRTSPJobsPageBaseUrl}/${id}/labelSettings`);
+      navigate(`${deployedRTSPJobsPageBaseUrl}/${id}/labelSettings`);
     },
     openViewCameraSettingsBtnClick: id => {
-      history.push(`${deployedRTSPJobsPageBaseUrl}/${id}/cameraSettings`);
+      navigate(`${deployedRTSPJobsPageBaseUrl}/${id}/cameraSettings`);
     },
     stopDeploymentRTSPJobBtnClick: id => {
-      history.push(`${deployedRTSPJobsPageBaseUrl}/${id}/terminate`);
+      navigate(`${deployedRTSPJobsPageBaseUrl}/${id}/terminate`);
     }
   };
 
@@ -36,50 +104,12 @@ export function DeployedRTSPJobsPage({ setKey }) {
     <DeployedRTSPJobsUIProvider
       deployedRTSPJobsUIEvents={deployedRTSPJobsUIEvents}
     >
-      <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/view`}>
-        {({ history, match }) => (
-          <DeployedRTSPJobsViewDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(deployedRTSPJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/terminate`}>
-        {({ history, match }) => (
-          <DeploymentRTSPJobTerminateDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(deployedRTSPJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/labelSettings`}>
-        {({ history, match }) => (
-          <DeployedRTSPJobsLabelSettingsDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(deployedRTSPJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/cameraSettings`}>
-        {({ history, match }) => (
-          <DeployedRTSPJobsCameraSettingsDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(deployedRTSPJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
+      <Routes>
+        <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/view`} element={<DeployedRTSPJobsViewDialogWrapper />} />
+        <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/terminate`} element={<DeploymentRTSPJobTerminateDialogWrapper />} />
+        <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/labelSettings`} element={<DeployedRTSPJobsLabelSettingsDialogWrapper />} />
+        <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/cameraSettings`} element={<DeployedRTSPJobsCameraSettingsDialogWrapper />} />
+      </Routes>
       <DeployedRTSPJobsCard />
     </DeployedRTSPJobsUIProvider>
   );

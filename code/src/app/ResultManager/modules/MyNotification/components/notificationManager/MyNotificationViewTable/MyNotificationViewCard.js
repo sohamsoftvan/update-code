@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Card, CardBody} from "../../../../../../../_metronic/_partials/controls";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import "react-datetime/css/react-datetime.css";
 import "react-multi-date-picker/styles/colors/teal.css";

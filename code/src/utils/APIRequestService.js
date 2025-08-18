@@ -1,6 +1,5 @@
 import Cookies from "universal-cookie";
 import { appConfigs } from "./AppConfigs";
-import { applyCacheHeaders } from './cacheControl';
 import {performLogout} from "./performLogout";
 import axiosInstance from "./CancelableAxios";
 
@@ -78,7 +77,7 @@ export function request(options) {
               performLogout();
             }
             unAthorizedStatus = true;
-            window.location.href = "#/auth/login";
+            window.location.replace("/auth/login");
           } else {
             // No tokens found, user is already logged out
             console.log("No access tokens found, user already logged out");

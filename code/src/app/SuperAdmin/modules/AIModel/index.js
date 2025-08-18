@@ -1,23 +1,21 @@
 import React from "react";
-import { Redirect, Switch } from "react-router-dom";
-import { ContentRoute } from "../../../../_metronic/layout";
+import { Navigate, Routes, Route } from "react-router-dom";
 import AIModelWizard from "../AIModelWizard/wizard";
 import ViewAIModel from "./components/ViewAIModel";
 
 export default function AIModel() {
     return (
-        <Switch>
-            <Redirect
-                exact={true}
-                from="/aiModel"
-                to="/aiModel/add"
+        <Routes>
+            {/* Redirect from aiModel root to add page */}
+            <Route
+                path="/aiModel"
+                element={<Navigate to="/aiModel/add" replace />}
             />
             {/* Surfaces */}
-            <ContentRoute from="/aiModel/add" component={AIModelWizard} />
+            <Route path="/aiModel/add" element={<AIModelWizard />} />
 
             {/* Layout */}
-            <ContentRoute from="/aiModel/view" component={ViewAIModel} />
-
-        </Switch>
+            <Route path="/aiModel/view/*" element={<ViewAIModel />} />
+        </Routes>
     );
 }

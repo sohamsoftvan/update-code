@@ -1,14 +1,17 @@
 import React, { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { LayoutSplashScreen } from "../../../../../_metronic/layout";
-import LogoResultPage from "./LogoResultPage";
+import {
+  ContentRoute,
+  LayoutSplashScreen,
+} from "../../../../../_metronic/layout";
+import {LogoResultsPageCard} from "./LogoResultsPageCard";
 
-export default function LogoResultIndex() {
+export default function LogoResultsPage() {
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Routes>
-        <Route path="/" element={<LogoResultPage />} />
-      </Routes>
-    </Suspense>
+      <LogoResultsPageCard/>
+      // <Suspense fallback={<LayoutSplashScreen />}>
+      //   <Switch>
+      //     <ContentRoute path={"/logo-results"} component={LogoResultsPageCard} />
+      //   </Switch>
+      // </Suspense>
   );
 }

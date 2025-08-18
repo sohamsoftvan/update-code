@@ -4,7 +4,6 @@ import Loadable from "../utils/Loadable";
 import {SUPER_ADMIN_ROLE} from "../enums/constant";
 
 // Lazy load SuperAdmin components
-const MyResultPage = Loadable(lazy(() => import("./SuperAdmin/modules/MyResult/MyResultTable/MyResultPage")));
 const Device = Loadable(lazy(() => import("./SuperAdmin/modules/Device")));
 const ModelType = Loadable(lazy(() => import("./SuperAdmin/modules/ModelType")));
 const FrameworkDetails = Loadable(lazy(() => import("./SuperAdmin/modules/FrameworkDetails")));
@@ -28,111 +27,104 @@ const ConfiguredUserDialog = Loadable(lazy(() => import("./SuperAdminNew/modules
 const SubscriptionModelCompanyUser = Loadable(lazy(() => import("./SuperAdminNew/modules/SubscriptionModelCompanyUser")));
 const CameraLabelMapping = Loadable(lazy(() => import("./SuperAdminNew/modules/CameraLabelMapping")));
 const FrameUploader = Loadable(lazy(() => import("./SuperAdminNew/modules/FrameUploader")));
-const DashboardPage = Loadable(lazy(() => import("./Admin/pages/DashboardPage")));
 
 const protectedRoute = (role, component) => (
     <ProtectedRoute routeRole={role}>{component}</ProtectedRoute>
 );
 
 const SuperAdminRoutes = [
+
     {
-        path: "/superadmin/myResult",
-        element: protectedRoute([SUPER_ADMIN_ROLE], <MyResultPage/>)
-    },
-    {
-        path: "/superadmin/device",
+        path: "/device",
         element: protectedRoute([SUPER_ADMIN_ROLE], <Device/>)
     },
     {
-        path: "/superadmin/modelType",
+        path: "/modelType",
         element: protectedRoute([SUPER_ADMIN_ROLE], <ModelType/>)
     },
     {
-        path: "/superadmin/frameworkDetails",
+        path: "/frameworkDetails",
         element: protectedRoute([SUPER_ADMIN_ROLE], <FrameworkDetails/>)
     },
     {
-        path: "/superadmin/deploymentType",
+        path: "/deploymentType",
         element: protectedRoute([SUPER_ADMIN_ROLE], <DeploymentType/>)
     },
     {
-        path: "/superadmin/inferJobs",
+        path: "/inferJobs",
         element: protectedRoute([SUPER_ADMIN_ROLE], <InferJobs/>)
     },
     {
-        path: "/superadmin/aiModel",
+        path: "/aiModel",
         element: protectedRoute([SUPER_ADMIN_ROLE], <AIModel/>)
     },
     {
-        path: "/superadmin/deploymentDetails",
+        path: "/deploymentDetails",
         element: protectedRoute([SUPER_ADMIN_ROLE], <DeploymentDetails/>)
     },
     {
-        path: "/superadmin/deployedDetails",
+        path: "/deployedDetails",
         element: protectedRoute([SUPER_ADMIN_ROLE], <DeployedDetails/>)
     },
+
     {
-        path: "/superadmin/dashboard",
-        element: protectedRoute([SUPER_ADMIN_ROLE], <DashboardPage/>)
-    },
-    {
-        path: "/superadmin/users",
+        path: "/users/",
         element: protectedRoute([SUPER_ADMIN_ROLE], <CompanyServicePage/>)
     },
     {
-        path: "/superadmin/NotificationSend",
+        path: "/NotificationSend",
         element: protectedRoute([SUPER_ADMIN_ROLE], <NotificationSendPage/>)
     },
     {
-        path: "/superadmin/locations",
+        path: "/locations",
         element: protectedRoute([SUPER_ADMIN_ROLE], <Locations/>)
     },
     {
-        path: "/superadmin/cameras",
+        path: "/cameras",
         element: protectedRoute([SUPER_ADMIN_ROLE], <Cameras/>)
     },
     {
-        path: "/superadmin/addSupervisor",
+        path: "/addSupervisor",
         element: protectedRoute([SUPER_ADMIN_ROLE], <AddSupervisor/>)
     },
     {
-        path: "/superadmin/subscriptions",
+        path: "/subscriptions",
         element: protectedRoute([SUPER_ADMIN_ROLE], <Subscription/>)
     },
     {
-        path: "/superadmin/allCamera",
+        path: "/allCamera",
         element: protectedRoute([SUPER_ADMIN_ROLE], <AllCamera/>)
     },
     {
-        path: "/superadmin/camera-status",
+        path: "/camera-status",
         element: protectedRoute([SUPER_ADMIN_ROLE], <AllCameraStatus/>)
     },
     {
-        path: "/superadmin/camera-logs",
+        path: "/camera-logs",
         element: protectedRoute([SUPER_ADMIN_ROLE], <AllCameraLog/>)
     },
     {
-        path: "/superadmin/company/company-user",
+        path: "/company/company-user",
         element: protectedRoute([SUPER_ADMIN_ROLE], <CompanyUser/>)
     },
     {
-        path: "/superadmin/company/company-user/add-company-user",
+        path: "/company/company-user/add-company-user",
         element: protectedRoute([SUPER_ADMIN_ROLE], <CompanyUserAddPage/>)
     },
     {
-        path: "/superadmin/company/company-user/configure-user",
+        path: "/company/company-user/configure-user",
         element: protectedRoute([SUPER_ADMIN_ROLE], <ConfiguredUserDialog/>)
     },
     {
-        path: "/superadmin/company/subscription-model",
+        path: "/company/subscription-model",
         element: protectedRoute([SUPER_ADMIN_ROLE], <SubscriptionModelCompanyUser/>)
     },
     {
-        path: "/superadmin/company/camera-label-mapping",
+        path: "/company/camera-label-mapping",
         element: protectedRoute([SUPER_ADMIN_ROLE], <CameraLabelMapping/>)
     },
     {
-        path: "/superadmin/company/frame-uploader",
+        path: "/company/frame-uploader",
         element: protectedRoute([SUPER_ADMIN_ROLE], <FrameUploader/>)
     },
 ];

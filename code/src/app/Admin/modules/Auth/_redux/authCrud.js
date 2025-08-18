@@ -48,11 +48,10 @@ export function requestPassword(email) {
   return axios.post(REQUEST_PASSWORD_URL, { email });
 }
 
-export function logout(data) {
+export function logout() {
   return request({
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    // headers: { "Content-Type": "application/x-www-form-urlencoded" },
     endpoint: LOGOUT_URL,
     method: HttpRequest.POST,
-    body: data,
   });
 }

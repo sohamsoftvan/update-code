@@ -34,14 +34,15 @@ export function UserNotificationsDropdown() {
   const [viewAllBtn, setShowViewALl] = useState(false);
   const [counter, setCounter] = useState(0);
   const [showNotification, setShowNotification] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const bgImage = toAbsoluteUrl("/media/misc/bg-1.jpg");
   let navigate = useNavigate();
   const uiService = useHtmlClassService();
   const layoutProps = useMemo(() => {
     return {
       offcanvas:
-        objectPath.get(uiService.config, "extras.notifications.layout") ===
-        "offcanvas",
+          objectPath.get(uiService.config, "extras.notifications.layout") ===
+          "offcanvas",
     };
   }, [uiService]);
 
@@ -51,50 +52,72 @@ export function UserNotificationsDropdown() {
     getAllNotifications1();
   }, []);
 
+  // Add effect to handle clicking outside dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showDropdown && !event.target.closest('.dropdown')) {
+        setShowDropdown(false);
+        // Mark notifications as read when closing
+        let ids = viewData.map((item) => item.id);
+        if (ids.length > 0) {
+          readNotifications(ids);
+        }
+      }
+    };
+
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDropdown, viewData]);
+
   const getAllNotifications1 = (all) => {
     getCameraNotification()
-      .then((response) => {
-        if (response && response.isSuccess) {
-          let data = response.data.filter((el) => el.is_unread);
-          setCounter(data.length || 0);
-          setdata(data);
-          let view = data;
-          if (!all) {
-            view = (data && data.slice(0, 3)) || [];
-            if (data.length > 3) {
-              setShowViewALl(true);
+        .then((response) => {
+          if (response && response.isSuccess) {
+            let data = response.data.filter((el) => el.is_unread);
+            setCounter(data.length || 0);
+            setdata(data);
+            let view = data;
+            if (!all) {
+              view = (data && data.slice(0, 3)) || [];
+              if (data.length > 3) {
+                setShowViewALl(true);
+              }
+            } else {
+              setShowViewALl(false);
             }
-          } else {
-            setShowViewALl(false);
+            setViewData(view);
           }
-          setViewData(view);
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
-        /*        if (error.detail) {
-          warningToast(error.detail);
-        } else {
-          warningToast("Something went Wrong");
-        }*/
-      });
+        })
+        .catch((error) => {
+          console.log("error", error);
+          /*        if (error.detail) {
+            warningToast(error.detail);
+          } else {
+            warningToast("Something went Wrong");
+          }*/
+        });
   };
 
   const getCounts = () => {
     getCameraNotification()
-      .then((response) => {
-        if (response && response.isSuccess) {
-          let data = response.data.filter((el) => el.is_unread);
-          setCounter(data.length || 0);
-        }
-      })
-      .catch((error) => {
-        /*        if (error.detail) {
-          warningToast(error.detail);
-        } else {
-          warningToast("Something went Wrong");
-        }*/
-      });
+        .then((response) => {
+          if (response && response.isSuccess) {
+            let data = response.data.filter((el) => el.is_unread);
+            setCounter(data.length || 0);
+          }
+        })
+        .catch((error) => {
+          /*        if (error.detail) {
+            warningToast(error.detail);
+          } else {
+            warningToast("Something went Wrong");
+          }*/
+        });
   };
 
   const viewAllNotifications = () => {
@@ -111,81 +134,56 @@ export function UserNotificationsDropdown() {
     });
   };
 
-  const toggleDropdown = (status) => {
-    if (!status) {
-      let ids = viewData.map((item) => item.id);
-      readNotifications(ids);
-    } else {
+  // Replace toggleDropdown with a more reliable toggle function
+  const handleToggleClick = () => {
+    const newStatus = !showDropdown;
+    setShowDropdown(newStatus);
+
+    if (newStatus) {
+      // Dropdown is opening, fetch fresh notifications
       getAllNotifications1();
+    } else {
+      // Dropdown is closing, mark notifications as read
+      let ids = viewData.map((item) => item.id);
+      if (ids.length > 0) {
+        readNotifications(ids);
+      }
     }
   };
 
-  const handleNotificationClick = (notificationType) => {
-    // Handle different notification types
-    switch (notificationType) {
-      case "system":
-        navigate("/notifications/system");
-        break;
-      case "user":
-        navigate("/notifications/user");
-        break;
-      case "alert":
-        navigate("/notifications/alert");
-        break;
-      default:
-        navigate("/notifications");
-    }
+  const handleViewAllClick = () => {
+    setShowDropdown(false);
+    navigate("/allNotification");
   };
 
   return (
-    <>
-      {layoutProps.offcanvas && (
-        <div className="topbar-item">
-          <div
-            className="btn btn-icon btn-clean btn-lg mr-1 pulse pulse-primary"
-            id="kt_quick_notifications_toggle"
-          >
-            <span className="svg-icon svg-icon-xl svg-icon-primary">
-              {/*<SVG src={toAbsoluteUrl("/media/svg/icons/Code/Compiling.svg")} />*/}
-
-              <NotificationsNoneIcon />
-
-              {/*<SVG src={}*/}
-            </span>
-            <span className="pulse-ring"></span>
-          </div>
-        </div>
-      )}
-      {!layoutProps.offcanvas && (
-        <Dropdown drop="down" alignRight onToggle={toggleDropdown}>
+      <>
+        <Dropdown
+            drop="down"
+            alignRight
+            show={showDropdown}
+            className="dropdown"
+        >
           <Dropdown.Toggle
-            as={DropdownTopbarItemToggler}
-            id="kt_quick_notifications_toggle"
+              as={DropdownTopbarItemToggler}
+              id="kt_quick_notifications_toggle"
+              onClick={handleToggleClick}
           >
             <OverlayTrigger
-              placement="bottom"
-              overlay={
-                <Tooltip id="user-notification-tooltip">
-                  User Notifications
-                </Tooltip>
-              }
+                placement="bottom"
+                overlay={<Tooltip id="user-notification-tooltip">User Notifications</Tooltip>}
             >
-              <div
-                className="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary"
-                id="kt_quick_notifications_toggle"
-                onClick={toggleNotificationDropdown}
-              >
-                <span className="svg-icon svg-icon-xl">
-                  <NotificationsNoneIcon color={"secondary"} />
-                  {counter && counter > 0 ? (
+              <div className="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
+              <span className="svg-icon svg-icon-xl">
+                <NotificationsNoneIcon color={"primary"} />
+                {counter && counter > 0 ? (
                     <>
                       <span className={"notification-counter"}>{counter}</span>
-                      {/*<span className="pulse-ring" />*/}
                     </>
-                  ) : (
+                ) : (
                     <span className="pulse-p1"></span>
-                  )}
-                </span>
+                )}
+              </span>
                 {counter && counter > 0 ? <span className="pulse-ring" /> : ""}
               </div>
             </OverlayTrigger>
@@ -196,20 +194,19 @@ export function UserNotificationsDropdown() {
               {/** Head */}
               <BlockUi tag="div" blocking={blocking} color="#014f9f">
                 <div
-                  className="d-flex flex-column pt-10 bgi-size-cover bgi-no-repeat rounded-top"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to bottom right, #147b82, #147b82)",
-                  }}
+                    className="d-flex flex-column pt-10 bgi-size-cover bgi-no-repeat rounded-top"
+                    style={{
+                      backgroundImage:
+                          "linear-gradient(to bottom right, #147b82, #147b82)",
+                    }}
                 >
                   <h4 className="d-flex flex-center rounded-top">
                     <span className="text-white ">Notifications</span>
                     <span className="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
                       <a
-                        className={"mt-2"}
-                        onClick={() =>
-                          navigate("/allNotification", "_blank")
-                        }
+                          className={"mt-2"}
+                          style={{ cursor: 'pointer', color: 'white' }}
+                          onClick={handleViewAllClick}
                       >
                         View All
                       </a>
@@ -218,88 +215,91 @@ export function UserNotificationsDropdown() {
 
                   <Tab.Container defaultActiveKey={key}>
                     <Nav
-                      as="ul"
-                      className="nav nav-bold nav-tabs nav-tabs-line nav-tabs-line-3x nav-tabs-line-transparent-white nav-tabs-line-active-border-success mt-3 px-8"
-                      onSelect={(_key) => setKey(_key)}
+                        as="ul"
+                        className="nav nav-bold nav-tabs nav-tabs-line nav-tabs-line-3x nav-tabs-line-transparent-white nav-tabs-line-active-border-success mt-3 px-8"
+                        onSelect={(_key) => setKey(_key)}
                     ></Nav>
                     <Tab.Content className="tab-content">
                       {/* <span className="text-white d-flex  pr-3 flex-row-reverse">
                          </span>*/}
                       <Tab.Pane eventKey="Alerts" className="p-4">
                         <PerfectScrollbar
-                          options={perfectScrollbarOptions}
-                          className="scroll pr-4 mr-n4"
-                          style={{
-                            maxHeight: "400px",
-                            position: "relative",
-                            height: "auto",
-                          }}
+                            options={perfectScrollbarOptions}
+                            className="scroll pr-4 mr-n4"
+                            style={{
+                              maxHeight: "400px",
+                              position: "relative",
+                              height: "auto",
+                            }}
                         >
                           {viewData && viewData.length > 0 ? (
-                            viewData.map((key, value) => (
-                              <div className="d-flex align-items-center mb-6">
-                                <div className="symbol symbol-40 symbol-light-primary mr-5">
+                              viewData.map((key, value) => (
+                                  <div key={key.id || value} className="d-flex align-items-center mb-6">
+                                    <div className="symbol symbol-40 symbol-light-primary mr-5">
                                   <span className="symbol-label">
                                     <SVG
-                                      src={toAbsoluteUrl(
-                                        "/media/svg/icons/Home/Library.svg"
-                                      )}
-                                      className="svg-icon-lg svg-icon-primary"
+                                        src={toAbsoluteUrl(
+                                            "/media/svg/icons/Home/Library.svg"
+                                        )}
+                                        className="svg-icon-lg svg-icon-primary"
                                     ></SVG>
                                   </span>
-                                </div>
-                                <div className="d-flex flex-column font-weight-bold">
-                                  <a
-                                    href="#"
-                                    className="text-dark text-hover-primary mb-1 font-size-lg"
-                                  ></a>
-                                  {key.notification_message}
+                                    </div>
+                                    <div className="d-flex flex-column font-weight-bold">
+                                      <a
+                                          href="#"
+                                          className="text-dark text-hover-primary mb-1 font-size-lg"
+                                      ></a>
+                                      {key.notification_message}
 
-                                  <span className="text-muted">
+                                      <span className="text-muted">
                                     {moment
-                                      .utc(key.created_date)
-                                      .local()
-                                      .format("MMMM DD YYYY, h:mm:ss a")}
+                                        .utc(key.created_date)
+                                        .local()
+                                        .format("MMMM DD YYYY, h:mm:ss a")}
                                   </span>
-                                </div>
-                              </div>
-                            ))
+                                    </div>
+                                  </div>
+                              ))
                           ) : (
-                            <div className={"text-center"}>
-                              No Notifications Available
-                            </div>
+                              <div className={"text-center"}>
+                                No Notifications Available
+                              </div>
                           )}
                         </PerfectScrollbar>
 
                         {viewAllBtn && (
-                          <div
-                            className="footer  text-center"
-                            style={{ cursor: "pointer" }}
-                            onClick={viewAllNotifications}
-                          >
                             <div
-                              className="text-dark"
-                              style={{ fontWeight: "600" }}
+                                className="footer  text-center"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  viewAllNotifications();
+                                  setShowDropdown(false);
+                                }}
                             >
+                              <div
+                                  className="text-dark"
+                                  style={{ fontWeight: "600" }}
+                              >
                               <span className="svg-icon svg-icon-xl text-dark">
                                 <SVG
-                                  src={toAbsoluteUrl(
-                                    "/media/svg/icons/Navigation/Angle-double-down.svg"
-                                  )}
+                                    src={toAbsoluteUrl(
+                                        "/media/svg/icons/Navigation/Angle-double-down.svg"
+                                    )}
                                 />
                               </span>
+                              </div>
                             </div>
-                          </div>
                         )}
                       </Tab.Pane>
                       <Tab.Pane
-                        eventKey="Events"
-                        id="topbar_notifications_events"
+                          eventKey="Events"
+                          id="topbar_notifications_events"
                       >
                         <PerfectScrollbar
-                          options={perfectScrollbarOptions}
-                          className="navi navi-hover scroll my-4"
-                          style={{ maxHeight: "300px", position: "relative" }}
+                            options={perfectScrollbarOptions}
+                            className="navi navi-hover scroll my-4"
+                            style={{ maxHeight: "300px", position: "relative" }}
                         >
                           <a href="#" className="navi-item">
                             <div className="navi-link">
@@ -458,7 +458,7 @@ export function UserNotificationsDropdown() {
                           <a href="#" className="navi-item">
                             <div className="navi-link">
                               <div className="navi-icon mr-2">
-                                <i className="flaticon-download-1 text-danger"></i>
+                                <i className="flaticon2-download-1 text-danger"></i>
                               </div>
                               <div className="navi-text">
                                 <div className="font-weight-bold">
@@ -512,7 +512,6 @@ export function UserNotificationsDropdown() {
             </form>
           </Dropdown.Menu>
         </Dropdown>
-      )}
-    </>
+      </>
   );
 }

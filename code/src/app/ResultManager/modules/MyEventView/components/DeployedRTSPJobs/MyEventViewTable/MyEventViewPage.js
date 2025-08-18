@@ -1,57 +1,57 @@
-import {Route} from "react-router-dom";
 import React from "react";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import {MyResultUIProvider} from "./MyEventViewUIContext";
 import {MyEventViewCard} from "./MyEventViewCard"
 import {MyEventViewDialog} from "./my-event-view-dialog/MyEventViewDialog";
 import {EventViewStatusDialog} from "./event-view-status-dialog/EventViewStatusDialog";
 
-export function MyEventViewPage({history}) {
-
+export function MyEventViewPage() {
+    const navigate = useNavigate();
     const myEventViewPageBaseUrl = '/eventsList';
-
 
     const myEventViewUIEvents = {
         openViewMyResultBtnClick: (id) => {
-            history.push(`${myEventViewPageBaseUrl}/${id}/view`);
+            navigate(`${id}/view`);
         },
         openChangeStatusBtnClick: (id, status) => {
-            history.push(`${myEventViewPageBaseUrl}/${id}/${status}/changeStatus`);
+            navigate(`${id}/${status}/changeStatus`);
         },
         openCardsClick: (data) => {
-            history.push(`${myEventViewPageBaseUrl}/${data}/cards`);
+            navigate(`${data}/cards`);
         }
+    };
+
+    const ViewDialogRoute = () => {
+        const { id } = useParams();
+        return (
+            <MyEventViewDialog
+                show={true}
+                id={id}
+                onHide={() => navigate(myEventViewPageBaseUrl)}
+            />
+        );
+    };
+
+    const ChangeStatusDialogRoute = () => {
+        const { id, status } = useParams();
+        return (
+            <EventViewStatusDialog
+                show={true}
+                id={id}
+                status={status}
+                onHide={() => navigate(myEventViewPageBaseUrl)}
+            />
+        );
     };
 
     return (
         <MyResultUIProvider myResultUIEvents={myEventViewUIEvents}>
-            <Route exact path={`${myEventViewPageBaseUrl}/:id/view`}>
-                {({history, match}) => (
-                    <MyEventViewDialog
-                        show={match != null}
-                        id={match?.params.id}
-                        onHide={() => {
-                            history.push(myEventViewPageBaseUrl);
-                        }}
-                    />
-                )}
-            </Route>
-            <Route exact path={`${myEventViewPageBaseUrl}/:id/:status/changeStatus`}>
-                {({history, match}) => (
-                    <>
-                        <EventViewStatusDialog
-                            show={match != null}
-                            id={match?.params?.id}
-                            status={match?.params?.status}
-                            onHide={() => {
-                                history.push(myEventViewPageBaseUrl);
-                            }}
-                        />
-                    </>
-                )}
-            </Route>
-            <Route exact path={`${myEventViewPageBaseUrl}`}>
-                <MyEventViewCard/>
-            </Route>
+            <Routes>
+                <Route path=":id/view" element={<ViewDialogRoute />} />
+                <Route path=":id/:status/changeStatus" element={<ChangeStatusDialogRoute />} />
+                <Route index element={<MyEventViewCard />} />
+                <Route path="" element={<MyEventViewCard />} />
+            </Routes>
         </MyResultUIProvider>
     );
 }
