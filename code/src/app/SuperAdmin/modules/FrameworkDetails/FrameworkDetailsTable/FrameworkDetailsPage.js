@@ -1,65 +1,57 @@
-import { Route } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import React from "react";
 import { FrameworkUIProvider } from "./FrameworkDetailsUIContext";
 import { FrameworkDetailsCard } from "./FrameworkDetailsCard";
 import { FrameworkDetailsEditDialog } from "./framework-details-edit-dialog/FrameworkDetailsEditDialog";
 import { FrameworkDetailsStatusDialog } from "./framework-status-dialog/FrameworkDetailsStatusDialog";
 
-export function FrameworkDetailsPage({ history }) {
+export function FrameworkDetailsPage() {
   const frameworkPageBaseUrl = "/frameworkDetails/frameworkDetailsPage";
+  const navigate = useNavigate();
 
   const frameworkDetailsUIEvents = {
     newFrameworkBtnClick: () => {
-      history.push(`${frameworkPageBaseUrl}/new`);
+      navigate(`new`);
     },
     changeStatusFrameworkBtnClick: (id, status, isDeprecatedStatus) => {
-      history.push(
-        `${frameworkPageBaseUrl}/${id}/${status}/${isDeprecatedStatus}/changeStatus`
-      );
+      navigate(`${id}/${status}/${isDeprecatedStatus}/changeStatus`);
     },
     editFrameworkBtnClick: (id) => {
-      history.push(`${frameworkPageBaseUrl}/${id}/edit`);
+      navigate(`${id}/edit`);
     },
   };
 
   return (
     <FrameworkUIProvider frameworkDetailsUIEvents={frameworkDetailsUIEvents}>
-      <Route path={`${frameworkPageBaseUrl}/new`}>
-        {({ history, match }) => (
-          <FrameworkDetailsEditDialog
-            show={match != null}
-            onHide={() => {
-              history.push(frameworkPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${frameworkPageBaseUrl}/:id/edit`}>
-        {({ history, match }) => (
-          <FrameworkDetailsEditDialog
-            show={match != null}
-            id={match?.params.id}
-            onHide={() => {
-              history.push(frameworkPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route
-        path={`${frameworkPageBaseUrl}/:id/:status/:isDeprecatedStatus/changeStatus`}
-      >
-        {({ history, match }) => (
-          <FrameworkDetailsStatusDialog
-            show={match != null}
-            id={match?.params.id}
-            status={match?.params.status}
-            isDeprecatedStatus={match?.params.isDeprecatedStatus}
-            onHide={() => {
-              history.push(frameworkPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
+      <Routes>
+        <Route
+          path="new"
+          element={
+            <FrameworkDetailsEditDialog
+              show={true}
+              onHide={() => navigate(frameworkPageBaseUrl)}
+            />
+          }
+        />
+        <Route
+          path=":id/edit"
+          element={
+            <FrameworkDetailsEditDialog
+              show={true}
+              onHide={() => navigate(frameworkPageBaseUrl)}
+            />
+          }
+        />
+        <Route
+          path=":id/:status/:isDeprecatedStatus/changeStatus"
+          element={
+            <FrameworkDetailsStatusDialog
+              show={true}
+              onHide={() => navigate(frameworkPageBaseUrl)}
+            />
+          }
+        />
+      </Routes>
       <FrameworkDetailsCard />
     </FrameworkUIProvider>
   );

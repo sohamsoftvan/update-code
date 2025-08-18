@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import SweetAlert from "react-bootstrap-sweetalert";
 import * as action from "../../../../_redux/DeploymentRTSPJobs/DeploymentRTSPJobsAction";
+import {useParams} from "react-router-dom";
 
-export function DeploymentRTSPJobStartDialog({ id, show, onHide }) {
+export function DeploymentRTSPJobStartDialog({show, onHide }) {
   const dispatch = useDispatch();
+  const {id} = useParams();
   const initialTitle = "Are you sure? to deploy";
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);

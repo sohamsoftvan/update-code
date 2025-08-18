@@ -8,15 +8,9 @@ export default function InferJobs() {
   return (
     <Suspense fallback={<LayoutSplashScreen /> }>
       <Routes>
-        {/* Redirect from /inferJobs root URL to /inferJobs/inferJobsPage */}
-        <Route
-          path="/inferJobs"
-          element={<Navigate to="/inferJobs/inferJobsPage" replace />}
-        />
-        <Route
-          path="/inferJobs/inferJobsPage"
-          element={<InferJobsPage />}
-        />
+        {/* Redirect from /inferJobs to /inferJobs/inferJobsPage */}
+        <Route index element={<Navigate to="inferJobsPage" replace />} />
+        <Route path="inferJobsPage/*" element={<InferJobsPage />} />
       </Routes>
     </Suspense>
   );

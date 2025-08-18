@@ -1,45 +1,49 @@
-import { Route } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import React from "react";
 import { InferJobsUIProvider } from "./InferJobsUIContext";
 import { InferJobsCard } from "./InferJobsCard";
 import { InferJobNewDialog } from "./infer-job-new-dialog/InferJobNewDialog";
 import { InferJobsViewDialog } from "./infer-job-view-dialog/InferJobsViewDialog";
 
-export function InferJobsPage({ history }) {
+export function InferJobsPage() {
   const inferJobsPageBaseUrl = "/inferJobs/inferJobsPage";
+  const navigate = useNavigate();
 
   const inferJobsUIEvents = {
     newInferJobBtnClick: () => {
-      history.push(`${inferJobsPageBaseUrl}/new`);
+      navigate(`new`);
     },
     openViewInferJobBtnClick: (id) => {
-      history.push(`${inferJobsPageBaseUrl}/${id}/view`);
+      navigate(`${id}/view`);
     },
   };
 
   return (
     <InferJobsUIProvider inferJobsUIEvents={inferJobsUIEvents}>
-      <Route path={`${inferJobsPageBaseUrl}/new`}>
-        {({ history, match }) => (
-          <InferJobNewDialog
-            show={match != null}
-            onHide={() => {
-              history.push(inferJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${inferJobsPageBaseUrl}/:id/view`}>
-        {({ history, match }) => (
-          <InferJobsViewDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(inferJobsPageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
+      <Routes>
+        <Route
+          path="new"
+          element={
+            <InferJobNewDialog
+              show={true}
+              onHide={() => {
+                navigate(inferJobsPageBaseUrl);
+              }}
+            />
+          }
+        />
+        <Route
+          path=":id/view"
+          element={
+            <InferJobsViewDialog
+              show={true}
+              onHide={() => {
+                navigate(inferJobsPageBaseUrl);
+              }}
+            />
+          }
+        />
+      </Routes>
       <InferJobsCard />
     </InferJobsUIProvider>
   );

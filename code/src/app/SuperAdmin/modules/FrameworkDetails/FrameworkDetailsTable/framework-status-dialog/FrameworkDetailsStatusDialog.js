@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import SweetAlert from "react-bootstrap-sweetalert";
 import * as action from "../../_redux/FrameworkDetailsAction";
+import {useParams} from "react-router-dom";
 
 export function FrameworkDetailsStatusDialog({
-  id,
-  status,
   show,
   onHide,
   isDeprecatedStatus,
 }) {
+  const {id , status} = useParams();
   const dispatch = useDispatch();
   const { entities } = useSelector(
     (state) => ({

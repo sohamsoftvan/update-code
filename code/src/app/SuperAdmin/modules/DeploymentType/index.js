@@ -8,15 +8,9 @@ export default function DeploymentType() {
   return (
     <Suspense fallback={<LayoutSplashScreen /> }>
       <Routes>
-        {/* Redirect from deploymentType root URL to /deploymentType/deploymentTypePage */}
-        <Route
-          path="/deploymentType"
-          element={<Navigate to="/deploymentType/deploymentTypePage" replace />}
-        />
-        <Route
-          path="/deploymentType/deploymentTypePage"
-          element={<DeploymentTypePage />}
-        />
+        {/* Redirect from deploymentType root URL to deploymentTypePage */}
+        <Route index element={<Navigate to="deploymentTypePage" replace />} />
+        <Route path="deploymentTypePage/*" element={<DeploymentTypePage />} />
       </Routes>
     </Suspense>
   );

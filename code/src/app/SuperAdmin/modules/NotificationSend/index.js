@@ -5,13 +5,14 @@ import {NotificationSendPage} from "./components/NotificationSendPage";
 
 export default function NotificationSend() {
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Routes>
-        <Route
-          path={"/NotificationSend"}
-          element={<NotificationSendPage />}
-        />
-      </Routes>
-    </Suspense>
+      <NotificationSendPage />
+    // <Suspense fallback={<LayoutSplashScreen />}>
+    //   <Routes>
+    //     <Route
+    //       path={"/NotificationSend"}
+    //       element={<NotificationSendPage />}
+    //     />
+    //   </Routes>
+    // </Suspense>
   );
 }

@@ -1,149 +1,79 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import PropTypes from "prop-types";
+import { useSubheader } from "../../../../../_metronic/layout";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Card, CardBody, CardHeader, CardTitle } from "reactstrap";
-import { Button, TextField, Typography, Box, Alert } from "@mui/material";
-import { CloudUpload, CheckCircle, Error } from "@mui/icons-material";
+import { Tab, Tabs } from "react-bootstrap";
+import { Box } from "@mui/material";
+import { Person } from "@mui/icons-material";
+import FormTitle from "../../../../../utils/SuperAdmin/FormTitle";
+import { Card, CardBody } from "../../../../../_metronic/_partials/controls";
+import StorageFramePage from "./StorageFrame/StorageFramePage";
 
-const FrameUploaderPage = () => {
+const tabs = [
+  { label: "storage-frame", icon: <Person />, component: <><StorageFramePage/></> },
+  { label: "ai-frame", icon: <Person />, component: <>AI Frame Content</> }
+];
+
+export default function FrameUploaderPage() {
+  const subheader = useSubheader();
+  subheader.setTitle("Frame Uploader");
+
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState(null);
-  const [error, setError] = useState(null);
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setSelectedFile(file);
-      setError(null);
-    } else {
-      setError('Please select a valid image file');
-      setSelectedFile(null);
-    }
-  };
+  const pathParts = location.pathname.split("/");
+  const tabKeyFromURL = pathParts[pathParts.length - 1];
+  const currentTab = tabs.findIndex(tab => tab.label === tabKeyFromURL) !== -1
+      ? tabs.findIndex(tab => tab.label === tabKeyFromURL)
+      : 0;
 
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      setError('Please select a file first');
-      return;
-    }
-
-    setUploading(true);
-    setError(null);
-
-    try {
-      // Simulate upload process
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setUploadStatus('success');
-      setSelectedFile(null);
-      
-      // Navigate back or to success page
-      setTimeout(() => {
-        navigate('/frame-uploader/success');
-      }, 1500);
-      
-    } catch (err) {
-      setUploadStatus('error');
-      setError('Upload failed. Please try again.');
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const handleBack = () => {
-    navigate(-1);
+  const handleTabChange = (key) => {
+    navigate(`/company/frame-uploader/${tabs[key].label}`);
   };
 
   return (
-    <div className="frame-uploader-page">
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <Typography variant="h5" component="h2">
-              Frame Uploader
-            </Typography>
-          </CardTitle>
-        </CardHeader>
+      <Card className="example example-compact">
         <CardBody>
-          <Box display="flex" flexDirection="column" gap={2}>
-            {error && (
-              <Alert severity="error" onClose={() => setError(null)}>
-                {error}
-              </Alert>
-            )}
-
-            {uploadStatus === 'success' && (
-              <Alert severity="success" icon={<CheckCircle />}>
-                Frame uploaded successfully!
-              </Alert>
-            )}
-
-            {uploadStatus === 'error' && (
-              <Alert severity="error" icon={<Error />}>
-                Upload failed. Please try again.
-              </Alert>
-            )}
-
-            <Box>
-              <input
-                accept="image/*"
-                style={{ display: 'none' }}
-                id="frame-file-input"
-                type="file"
-                onChange={handleFileSelect}
-              />
-              <label htmlFor="frame-file-input">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component="span"
-                  startIcon={<CloudUpload />}
-                  disabled={uploading}
-                >
-                  Select Frame Image
-                </Button>
-              </label>
-            </Box>
-
-            {selectedFile && (
-              <Box>
-                <Typography variant="body2" color="textSecondary">
-                  Selected file: {selectedFile.name}
-                </Typography>
-                <img
-                  src={URL.createObjectURL(selectedFile)}
-                  alt="Preview"
-                  style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '8px' }}
-                />
-              </Box>
-            )}
-
-            <Box display="flex" gap={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleUpload}
-                disabled={!selectedFile || uploading}
-                startIcon={uploading ? <div className="spinner-border spinner-border-sm" /> : null}
-              >
-                {uploading ? 'Uploading...' : 'Upload Frame'}
-              </Button>
-              
-              <Button
-                variant="outlined"
-                onClick={handleBack}
-                disabled={uploading}
-              >
-                Back
-              </Button>
-            </Box>
-          </Box>
+          <Tabs
+              id="frame-uploader-tabs"
+              activeKey={currentTab}
+              onSelect={handleTabChange}
+          >
+            {tabs.map((tab, index) => (
+                <Tab eventKey={index} title={tab.label} key={index}>
+                  <CustomTabPanel value={currentTab} index={index}>
+                    {tab.component}
+                  </CustomTabPanel>
+                </Tab>
+            ))}
+          </Tabs>
         </CardBody>
       </Card>
-    </div>
   );
-};
+}
 
-export default FrameUploaderPage;
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+      <div
+          role="tabpanel"
+          hidden={value !== index}
+          id={`simple-tabpanel-${index}`}
+          aria-labelledby={`simple-tab-${index}`}
+          {...other}
+      >
+        {value === index && (
+            <Box sx={{ p: 2 }}>
+              <FormTitle title={children} />
+            </Box>
+        )}
+      </div>
+  );
+}
+
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
+};

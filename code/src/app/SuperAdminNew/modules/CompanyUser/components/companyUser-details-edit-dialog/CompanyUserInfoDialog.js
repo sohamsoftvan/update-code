@@ -39,7 +39,7 @@ export function CompanyUserInfoDialog({show, onHide, infoData}) {
             applyButton={false}
             content={
                 <>
-                    <div className="p-4 container-fluid" style={{maxHeight: "75vh", overflowY: "auto"}}>
+                    <div className="p-4 container-fluid">
                         <div className="company-details-wrapper">
 
                             {/* ➤ Add User Button */}

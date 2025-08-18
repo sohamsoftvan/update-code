@@ -1,5 +1,5 @@
 import React from "react";
-import CompanyUserCard from "./CompanyUserCard";
+import {CompanyUserCard} from "./CompanyUserCard";
 
 export function CompanyUserPage() {
 

@@ -4,10 +4,11 @@ import { FrameworkDetailsEditForm } from "./FrameworkDetailsEditForm";
 import * as action from "../../_redux/FrameworkDetailsAction";
 import { FrameworkDetailsSlice } from "../../_redux/FrameworkDetailsSlice";
 import { successToast } from "../../../../../../utils/ToastMessage";
+import {useParams} from "react-router-dom";
 
 const { actions } = FrameworkDetailsSlice;
 
-export function FrameworkDetailsEditDialog({ id, show, onHide }) {
+export function FrameworkDetailsEditDialog({ show, onHide }) {
   const { actionsLoading, frameworkFetchedById } = useSelector(
     (state) => ({
       actionsLoading: state.frameworkDetails.actionsLoading,
@@ -15,7 +16,7 @@ export function FrameworkDetailsEditDialog({ id, show, onHide }) {
     }),
     shallowEqual
   );
-
+  const {id} = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {

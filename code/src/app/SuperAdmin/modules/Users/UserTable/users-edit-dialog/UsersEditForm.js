@@ -174,7 +174,7 @@ export function UsersEditForm({ saveUser, onHide,id,show,loading,actionsLoading 
           applyButton={true}
           content={
             <>
-              <SavingDetailsModal show={loading} />
+              {/*<SavingDetailsModal show={loading} />*/}
                 <Form>
                   <Form.Group as={Row} controlId="formHorizontalEmail">
                     <Form.Label column sm={4}>

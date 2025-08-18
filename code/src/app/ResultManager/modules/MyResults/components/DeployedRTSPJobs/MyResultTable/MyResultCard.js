@@ -541,7 +541,7 @@ export function MyResultCard() {
         </Row>
         <Row>
           <Col>
-            {show && (
+            {show ? (
               <MyResultTable
                 labelname={camerasIds}
                 startDate={startDate}
@@ -558,7 +558,7 @@ export function MyResultCard() {
                 applyFlag={applyFlag}
                 intervalValue={intervalValue}
               />
-            )}
+            ) :<h3 align="center">No Data Found</h3>}
           </Col>
         </Row>
       </CardBody>

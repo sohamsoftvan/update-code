@@ -505,7 +505,7 @@ export function MyEventViewCard() {
         </Row>
         <Row>
           <Col>
-            {show && (
+            {show ? (
               <MyEventViewTable
                   cameraOptions={cameraOptions}
                 labelname={camerasIds}
@@ -522,7 +522,7 @@ export function MyEventViewCard() {
                   setApplyFlag={setApplyFlag}
                   applyFlag={applyFlag}
               />
-            )}
+            ) : <h3 align="center">No Data Found</h3>}
           </Col>
         </Row>
       </CardBody>

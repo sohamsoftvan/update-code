@@ -4,10 +4,11 @@ import { ModelTypeEditForm } from "./ModelTypeEditForm";
 import { ModelTypeSlice } from "../../_redux/ModelTypeSlice";
 import * as action from "../../_redux/ModelTypeAction";
 import { successToast } from "../../../../../../utils/ToastMessage";
+import {useParams} from "react-router-dom";
 
 const { actions } = ModelTypeSlice;
 
-export function ModelTypeEditDialog({ id, show, onHide }) {
+export function ModelTypeEditDialog({ show, onHide }) {
   const { actionsLoading, modelTypeFetchedById } = useSelector(
     (state) => ({
       actionsLoading: state.modelType.actionsLoading,
@@ -15,7 +16,7 @@ export function ModelTypeEditDialog({ id, show, onHide }) {
     }),
     shallowEqual
   );
-
+  const {id} = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -1,60 +1,57 @@
-import { Route } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import React from "react";
 import { ModelTypeUIProvider } from "./ModelTypeUIContext";
 import { ModelTypeCard } from "./ModelTypeCard";
 import { ModelTypeEditDialog } from "./model-type-edit-dialog/ModelTypeEditDialog";
 import { ModelTypeStatusDialog } from "./model-type-status-dialog/ModelTypeStatusDialog";
 
-export function ModelTypePage({ history }) {
+export function ModelTypePage() {
   const modelTypePageBaseUrl = "/modelType/modelTypePage";
+  const navigate = useNavigate();
 
   const modelTypeUIEvents = {
     newModelTypeButtonClick: () => {
-      history.push(`${modelTypePageBaseUrl}/new`);
+      navigate(`new`);
     },
     openChangeStatusDialog: (id, status) => {
-      history.push(`${modelTypePageBaseUrl}/${id}/${status}/changeStatus`);
+      navigate(`${id}/${status}/changeStatus`);
     },
     openEditModelTypeDialog: (id) => {
-      history.push(`${modelTypePageBaseUrl}/${id}/edit`);
+      navigate(`${id}/edit`);
     },
   };
 
   return (
     <ModelTypeUIProvider modelTypeUIEvents={modelTypeUIEvents}>
-      <Route path={`${modelTypePageBaseUrl}/new`}>
-        {({ history, match }) => (
-          <ModelTypeEditDialog
-            show={match != null}
-            onHide={() => {
-              history.push(modelTypePageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${modelTypePageBaseUrl}/:id/edit`}>
-        {({ history, match }) => (
-          <ModelTypeEditDialog
-            show={match != null}
-            id={match?.params?.id}
-            onHide={() => {
-              history.push(modelTypePageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
-      <Route path={`${modelTypePageBaseUrl}/:id/:status/changeStatus`}>
-        {({ history, match }) => (
-          <ModelTypeStatusDialog
-            show={match != null}
-            id={match?.params?.id}
-            status={match?.params?.status}
-            onHide={() => {
-              history.push(modelTypePageBaseUrl);
-            }}
-          />
-        )}
-      </Route>
+      <Routes>
+        <Route
+          path="new"
+          element={
+            <ModelTypeEditDialog
+              show={true}
+              onHide={() => navigate(modelTypePageBaseUrl)}
+            />
+          }
+        />
+        <Route
+          path=":id/edit"
+          element={
+            <ModelTypeEditDialog
+              show={true}
+              onHide={() => navigate(modelTypePageBaseUrl)}
+            />
+          }
+        />
+        <Route
+          path=":id/:status/changeStatus"
+          element={
+            <ModelTypeStatusDialog
+              show={true}
+              onHide={() => navigate(modelTypePageBaseUrl)}
+            />
+          }
+        />
+      </Routes>
       <ModelTypeCard />
     </ModelTypeUIProvider>
   );

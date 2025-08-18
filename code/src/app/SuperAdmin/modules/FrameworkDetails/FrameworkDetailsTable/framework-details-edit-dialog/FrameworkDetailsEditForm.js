@@ -60,7 +60,7 @@ export function FrameworkDetailsEditForm({
           applyButton={true}
           content={
             <>
-            <SavingDetailsModal show={loading} top={"start"} />
+            {/*<SavingDetailsModal show={loading} top={"start"} />*/}
               <Form>
                 <Form.Group controlId="frameworkName" as={Row}>
                   <Form.Label column sm={4}>

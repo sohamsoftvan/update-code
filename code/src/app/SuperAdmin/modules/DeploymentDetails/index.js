@@ -1,44 +1,52 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { Card, CardBody } from "../../../../_metronic/_partials/controls";
 import DeploymentJobs from "./components/DeploymentJobs";
 import DeploymentRTSPJobs from "./components/DeploymentRTSPJobs";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export default class DeploymentDetails extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      key: "deploymentJobs"
-    };
-  }
+export default function DeploymentDetails() {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  setKey = key => this.setState({ key });
+  const activeKey = useMemo(() => {
+    if (location.pathname.includes("/deploymentDetails/deploymentRTSPJobsPage")) {
+      return "deploymentRTSPJobs";
+    }
+    return "deploymentJobs";
+  }, [location.pathname]);
 
-  handleTabChange = key => {
-    this.setState({ key });
-    this.props.history.push(`/deploymentDetails/${key}Page`);
+  useEffect(() => {
+    if (location.pathname === "/deploymentDetails") {
+      navigate("/deploymentDetails/deploymentJobsPage", { replace: true });
+    }
+  }, [location.pathname, navigate]);
+
+  const setKey = (key) => {
+    navigate(`/deploymentDetails/${key}Page`);
   };
 
-  render() {
-    return (
-      <Card className="example example-compact">
-        {/*<CardHeader title={"Deployment Details"}/>*/}
-        <CardBody>
-          <Tabs
-            id="controlled-tab-example"
-            activeKey={this.state.key}
-            onSelect={this.handleTabChange}
-            style={{ fontSize: "1.275rem", fontWeight: "500" }}
-          >
-            <Tab eventKey="deploymentJobs" title="Deployment Jobs">
-              <DeploymentJobs setKey={this.setKey} />
-            </Tab>
-            <Tab eventKey="deploymentRTSPJobs" title="Deployment RTSP Jobs">
-              <DeploymentRTSPJobs setKey={this.setKey} />
-            </Tab>
-          </Tabs>
-        </CardBody>
-      </Card>
-    );
-  }
+  const handleTabChange = (key) => {
+    setKey(key);
+  };
+
+  return (
+    <Card className="example example-compact">
+      <CardBody>
+        <Tabs
+          id="deployment-details-tabs"
+          activeKey={activeKey}
+          onSelect={handleTabChange}
+          style={{ fontSize: "1.275rem", fontWeight: "500" }}
+        >
+          <Tab eventKey="deploymentJobs" title="Deployment Jobs">
+            <DeploymentJobs setKey={setKey} />
+          </Tab>
+          <Tab eventKey="deploymentRTSPJobs" title="Deployment RTSP Jobs">
+            <DeploymentRTSPJobs setKey={setKey} />
+          </Tab>
+        </Tabs>
+      </CardBody>
+    </Card>
+  );
 }

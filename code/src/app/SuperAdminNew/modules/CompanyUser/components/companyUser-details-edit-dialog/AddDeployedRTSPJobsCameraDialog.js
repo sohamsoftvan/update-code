@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import CommonModal from "../../../../../../utils/SuperAdmin/CommonModal";
-import Form from "react-bootstrap/Form";
+import {Form} from "react-bootstrap";
 import FormFieldCommon from "../../../../../../utils/SuperAdmin/FormFieldCommon";
 import ReactSelectDropDownCommon from "../../../../../../utils/SuperAdmin/ReactSelectDropDownCommon";
 import CustomizedSwitch from "../../../../../../utils/SuperAdmin/CustomizedSwitch";

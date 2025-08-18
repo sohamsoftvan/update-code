@@ -60,7 +60,7 @@ export function DeploymentTypeEditForm({
           applyButton={true}
           content={
             <>
-              <SavingDetailsModal show={loading} top={"start"} />
+              {/*<SavingDetailsModal show={loading} top={"start"} />*/}
               <Form>
                 <Form.Group controlId="deploymentTypeName" as={Row}>
                   <Form.Label column sm={4}>

@@ -57,19 +57,6 @@ import SubscriptionModelCompanyUser from "./SuperAdminNew/modules/SubscriptionMo
 import CameraLabelMapping from "./SuperAdminNew/modules/CameraLabelMapping";
 import FrameUploader from "./SuperAdminNew/modules/FrameUploader";
 
-// const Locations = Loadable(lazy(() => import("./SuperAdminNew/modules/Location")));
-// const Cameras = Loadable(lazy(() => import("./SuperAdminNew/modules/Camera")));
-// const AddSupervisor = Loadable(lazy(() => import("./SuperAdminNew/modules/AddSupervisor")));
-// const Subscription = Loadable(lazy(() => import("./SuperAdminNew/modules/Subscriptions")));
-// const AllCamera = Loadable(lazy(() => import("./SuperAdminNew/modules/AllCamera")));
-// const AllCameraStatus = Loadable(lazy(() => import("./SuperAdminNew/modules/AllCameraStatus")));
-// const AllCameraLog = Loadable(lazy(() => import("./SuperAdminNew/modules/AllCameraLogs")));
-// const CompanyUser = Loadable(lazy(() => import("./SuperAdminNew/modules/CompanyUser")));
-// const CompanyUserAddPage = Loadable(lazy(() => import("./SuperAdminNew/modules/CompanyUser/components/companyUser-details-edit-dialog/CompanyUserAddPage")));
-// const ConfiguredUserDialog = Loadable(lazy(() => import("./SuperAdminNew/modules/CompanyUser/components/companyUser-details-edit-dialog/ConfiguredUserDialog")));
-// const SubscriptionModelCompanyUser = Loadable(lazy(() => import("./SuperAdminNew/modules/SubscriptionModelCompanyUser")));
-// const CameraLabelMapping = Loadable(lazy(() => import("./SuperAdminNew/modules/CameraLabelMapping")));
-// const FrameUploader = Loadable(lazy(() => import("./SuperAdminNew/modules/FrameUploader")));
 
 // Lazy load components
 const Logout = Loadable(lazy(() => import("./Admin/modules/Auth/pages/Logout")));
@@ -228,23 +215,23 @@ const adminRoutes = [
 
     //super admin
     {
-        path: "/device",
+        path: "/device/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <Device/>)
     },
     {
-        path: "/modelType",
+        path: "/modelType/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <ModelType/>)
     },
     {
-        path: "/frameworkDetails",
+        path: "/frameworkDetails/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <FrameworkDetails/>)
     },
     {
-        path: "/deploymentType",
+        path: "/deploymentType/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <DeploymentType/>)
     },
     {
-        path: "/inferJobs",
+        path: "/inferJobs/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <InferJobs/>)
     },
     {
@@ -252,11 +239,11 @@ const adminRoutes = [
         element: protectedRoute([SUPER_ADMIN_ROLE], <AIModel/>)
     },
     {
-        path: "/deploymentDetails",
+        path: "/deploymentDetails/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <DeploymentDetails/>)
     },
     {
-        path: "/deployedDetails",
+        path: "/deployedDetails/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <DeployedDetails/>)
     },
 
@@ -265,7 +252,7 @@ const adminRoutes = [
         element: protectedRoute([SUPER_ADMIN_ROLE], <CompanyServicePage/>)
     },
     {
-        path: "/NotificationSend",
+        path: "/NotificationSend/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <NotificationSendPage/>)
     },
     {
@@ -297,7 +284,7 @@ const adminRoutes = [
         element: protectedRoute([SUPER_ADMIN_ROLE], <AllCameraLog/>)
     },
     {
-        path: "/company/company-user",
+        path: "/company/company-user/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <CompanyUser/>)
     },
     {
@@ -317,7 +304,7 @@ const adminRoutes = [
         element: protectedRoute([SUPER_ADMIN_ROLE], <CameraLabelMapping/>)
     },
     {
-        path: "/company/frame-uploader",
+        path: "/company/frame-uploader/*",
         element: protectedRoute([SUPER_ADMIN_ROLE], <FrameUploader/>)
     },
 

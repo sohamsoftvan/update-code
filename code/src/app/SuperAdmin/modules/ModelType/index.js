@@ -7,15 +7,9 @@ export default function ModelType() {
   return (
     <Suspense fallback={<LayoutSplashScreen /> }>
       <Routes>
-        {/* Redirect from modelType root URL to /modelType/modelTypePage */}
-        <Route
-          path="/modelType"
-          element={<Navigate to="/modelType/modelTypePage" replace />}
-        />
-        <Route
-          path="/modelType/modelTypePage"
-          element={<ModelTypePage />}
-        />
+        {/* Redirect from /modelType to /modelType/modelTypePage */}
+        <Route index element={<Navigate to="modelTypePage" replace />}/>
+        <Route path="modelTypePage/*" element={<ModelTypePage />}/>
       </Routes>
     </Suspense>
   );

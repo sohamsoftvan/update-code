@@ -5,7 +5,7 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import store, { persistor } from "./redux/store";
 import App from "./app/App";
 import "./index.scss"; // Standard version
@@ -25,7 +25,8 @@ import {
 import { MetronicI18nProvider } from "./_metronic/i18n";
 
 const {PUBLIC_URL} = process.env;
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container);
 root.render(
     <MetronicI18nProvider>
       <MetronicLayoutProvider>

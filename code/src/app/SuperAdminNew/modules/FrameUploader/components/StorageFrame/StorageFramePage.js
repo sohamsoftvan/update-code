@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {AllStorageFrameData} from "../../../../../../utils/SuperAdmin/enums/CompanyOption";
 import {Col, Row} from "reactstrap";
-import CardHeader from "@mui/material/CardHeader";
+import {CardHeader} from "@mui/material";
 import StorageFrameTable from "./StorageFrameTable";
 import {UploadModal} from "./UploadModal";
 

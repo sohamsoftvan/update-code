@@ -105,10 +105,10 @@ export function DeployedRTSPJobsPage({ setKey }) {
       deployedRTSPJobsUIEvents={deployedRTSPJobsUIEvents}
     >
       <Routes>
-        <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/view`} element={<DeployedRTSPJobsViewDialogWrapper />} />
-        <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/terminate`} element={<DeploymentRTSPJobTerminateDialogWrapper />} />
-        <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/labelSettings`} element={<DeployedRTSPJobsLabelSettingsDialogWrapper />} />
-        <Route path={`${deployedRTSPJobsPageBaseUrl}/:id/cameraSettings`} element={<DeployedRTSPJobsCameraSettingsDialogWrapper />} />
+        <Route path=":id/view" element={<DeployedRTSPJobsViewDialogWrapper />} />
+        <Route path=":id/terminate" element={<DeploymentRTSPJobTerminateDialogWrapper />} />
+        <Route path=":id/labelSettings" element={<DeployedRTSPJobsLabelSettingsDialogWrapper />} />
+        <Route path=":id/cameraSettings" element={<DeployedRTSPJobsCameraSettingsDialogWrapper />} />
       </Routes>
       <DeployedRTSPJobsCard />
     </DeployedRTSPJobsUIProvider>

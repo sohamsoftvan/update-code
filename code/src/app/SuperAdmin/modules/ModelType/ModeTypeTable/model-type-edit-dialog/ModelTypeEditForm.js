@@ -53,7 +53,7 @@ export function ModelTypeEditForm({ saveModelType, modelTypeData, onHide,id,load
           id={id}
           content={
             <>
-              <SavingDetailsModal show={loading} top={"start"} />
+              {/*<SavingDetailsModal show={loading} top={"start"} />*/}
               <Form>
                 <Form.Group controlId="ModelTypeName" as={Row}>
                   <Form.Label column sm={4}>

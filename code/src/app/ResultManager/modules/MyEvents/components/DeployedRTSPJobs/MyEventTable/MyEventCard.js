@@ -542,7 +542,7 @@ export function MyEventCard() {
                 </Row>
                 <Row>
                     <Col>
-                        {show && (
+                        {show ? (
                             <MyEventTable
                                 originalCompanyId={originalCompanyId}
                                 labelname={camerasIds}
@@ -559,7 +559,7 @@ export function MyEventCard() {
                                 setApplyFlag={setApplyFlag}
                                 applyFlag={applyFlag}
                             />
-                        )}
+                        ) :<h3 align="center">No Data Found</h3>}
                     </Col>
                 </Row>
             </CardBody>

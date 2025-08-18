@@ -24,9 +24,9 @@ function Router() {
         const role = user?.roles[0]?.role;
         switch (role) {
             case ADMIN_ROLE:
-                return "/admin/dashboard";
+                return "/admin/locations";
             case SUPER_ADMIN_ROLE:
-                return "/dashboard";
+                return "/locations";
             case RESULT_MANAGER_ROLE:
                 return "/my-results";
             default:

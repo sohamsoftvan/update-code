@@ -61,8 +61,8 @@ export function DeployedJobsPage({ setKey }) {
   return (
     <DeployedJobsUIProvider deployedJobsUIEvents={deployedJobsUIEvents}>
       <Routes>
-        <Route path={`${deployedJobsPageBaseUrl}/:id/view`} element={<DeployedJobsViewDialogWrapper />} />
-        <Route path={`${deployedJobsPageBaseUrl}/:id/terminate`} element={<DeploymentJobTerminateDialogWrapper />} />
+        <Route path=":id/view" element={<DeployedJobsViewDialogWrapper />} />
+        <Route path=":id/terminate" element={<DeploymentJobTerminateDialogWrapper />} />
       </Routes>
       <DeployedJobsCard />
     </DeployedJobsUIProvider>

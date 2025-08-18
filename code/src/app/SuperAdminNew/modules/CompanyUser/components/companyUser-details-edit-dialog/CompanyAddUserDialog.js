@@ -5,7 +5,7 @@ import CustomizedButtons from "../../../../../../utils/SuperAdmin/CustomizedButt
 import CustomizedSwitch from "../../../../../../utils/SuperAdmin/CustomizedSwitch";
 import ReactSelectDropDownCommon from "../../../../../../utils/SuperAdmin/ReactSelectDropDownCommon";
 import FormFieldCommon from "../../../../../../utils/SuperAdmin/FormFieldCommon";
-import Form from "react-bootstrap/Form";
+import {Form} from "react-bootstrap";
 import {AllLocationOption, AllRoleOptions} from "../../../../../../utils/SuperAdmin/enums/CompanyOption";
 
 

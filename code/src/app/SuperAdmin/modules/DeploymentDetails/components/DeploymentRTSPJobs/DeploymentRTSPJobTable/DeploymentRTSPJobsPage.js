@@ -1,63 +1,29 @@
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import React, { useEffect } from "react";
 import { DeploymentRTSPJobsUIProvider } from "./DeploymentRTSPJobsUIContext";
 import { DeploymentRTSPJobsCard } from "./DeploymentRTSPJobsCard";
 import { DeploymentRTSPJobNewDialog } from "./deployment-rtsp-job-new-dialog/DeploymentRTSPJobNewDialog";
 import { DeploymentRTSPJobsViewDialog } from "./deployment-rtsp-job-view-dialog/DeploymentRTSPJobsViewDialog";
 import { DeploymentRTSPJobStartDialog } from "./deployment-rtsp-job-start-dialog/DeploymentRTSPJobStartDialog";
-
-function DeploymentRTSPJobNewDialogWrapper() {
-  const navigate = useNavigate();
-  const deploymentRTSPJobsPageBaseUrl = "/deploymentDetails/deploymentRTSPJobsPage";
-  return (
-    <DeploymentRTSPJobNewDialog
-      show={true}
-      onHide={() => {
-        navigate(deploymentRTSPJobsPageBaseUrl);
-      }}
-    />
-  );
-}
-
-function DeploymentRTSPJobsViewDialogWrapper() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const deploymentRTSPJobsPageBaseUrl = "/deploymentDetails/deploymentRTSPJobsPage";
-  return (
-    <DeploymentRTSPJobsViewDialog
-      show={true}
-      id={id}
-      onHide={() => {
-        navigate(deploymentRTSPJobsPageBaseUrl);
-      }}
-    />
-  );
-}
-
-function DeploymentRTSPJobStartDialogWrapper() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const deploymentRTSPJobsPageBaseUrl = "/deploymentDetails/deploymentRTSPJobsPage";
-  return (
-    <DeploymentRTSPJobStartDialog
-      show={true}
-      id={id}
-      onHide={() => {
-        navigate(deploymentRTSPJobsPageBaseUrl);
-      }}
-    />
-  );
-}
+import {
+  DeploymentJobNewDialog
+} from "../../DeploymentJobs/DeploymentJobTable/deployment-job-new-dialog/DeploymentJobNewDialog";
+import {
+  DeploymentJobsViewDialog
+} from "../../DeploymentJobs/DeploymentJobTable/deployment-job-view-dialog/DeploymentJobsViewDialog";
+import {
+  DeploymentJobStartDialog
+} from "../../DeploymentJobs/DeploymentJobTable/deployment-job-start-dialog/DeploymentJobStartDialog";
 
 export function DeploymentRTSPJobsPage({ setKey }) {
   const deploymentRTSPJobsPageBaseUrl =
-    "/deploymentDetails/deploymentRTSPJobsPage";
+      "/deploymentDetails/deploymentRTSPJobsPage";
   const navigate = useNavigate();
 
   useEffect(
-    () => setKey("deploymentRTSPJobs"),
-    //eslint-disable-next-line
-    []
+      () => setKey("deploymentRTSPJobs"),
+      //eslint-disable-next-line
+      []
   );
 
   const deploymentRTSPJobsUIEvents = {
@@ -73,15 +39,45 @@ export function DeploymentRTSPJobsPage({ setKey }) {
   };
 
   return (
-    <DeploymentRTSPJobsUIProvider
-      deploymentRTSPJobsUIEvents={deploymentRTSPJobsUIEvents}
-    >
-      <Routes>
-        <Route path={`${deploymentRTSPJobsPageBaseUrl}/new`} element={<DeploymentRTSPJobNewDialogWrapper />} />
-        <Route path={`${deploymentRTSPJobsPageBaseUrl}/:id/view`} element={<DeploymentRTSPJobsViewDialogWrapper />} />
-        <Route path={`${deploymentRTSPJobsPageBaseUrl}/:id/deploy`} element={<DeploymentRTSPJobStartDialogWrapper />} />
-      </Routes>
-      <DeploymentRTSPJobsCard />
-    </DeploymentRTSPJobsUIProvider>
+      <DeploymentRTSPJobsUIProvider
+          deploymentRTSPJobsUIEvents={deploymentRTSPJobsUIEvents}
+      >
+        <Routes>
+          <Route
+              path="new"
+              element={
+                <DeploymentRTSPJobNewDialog
+                    show={true}
+                    onHide={() => {
+                      navigate(deploymentRTSPJobsPageBaseUrl);
+                    }}
+                />
+              }
+          />
+          <Route
+              path=":id/view"
+              element={
+                <DeploymentRTSPJobsViewDialog
+                    show={true}
+                    onHide={() => {
+                      navigate(deploymentRTSPJobsPageBaseUrl);
+                    }}
+                />
+              }
+          />
+          <Route
+              path=":id/deploy"
+              element={
+                <DeploymentRTSPJobStartDialog
+                    show={true}
+                    onHide={() => {
+                      navigate(deploymentRTSPJobsPageBaseUrl);
+                    }}
+                />
+              }
+          />
+        </Routes>
+        <DeploymentRTSPJobsCard />
+      </DeploymentRTSPJobsUIProvider>
   );
 }

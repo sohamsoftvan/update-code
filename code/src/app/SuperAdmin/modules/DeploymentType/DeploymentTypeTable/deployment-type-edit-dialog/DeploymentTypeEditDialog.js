@@ -4,10 +4,11 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as action from "../../_redux/DeploymentTypeAction";
 import { DeploymentTypeSlice } from "../../_redux/DeploymentTypeSlice";
 import { successToast } from "../../../../../../utils/ToastMessage";
+import {useParams} from "react-router-dom";
 
 const { actions } = DeploymentTypeSlice;
 
-export function DeploymentTypeEditDialog({ id, show, onHide }) {
+export function DeploymentTypeEditDialog({ show, onHide }) {
   const { actionsLoading, deploymentTypeFetchedById } = useSelector(
     state => ({
       actionsLoading: state.deploymentType.actionsLoading,
@@ -15,7 +16,7 @@ export function DeploymentTypeEditDialog({ id, show, onHide }) {
     }),
     shallowEqual
   );
-
+  const {id} = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {

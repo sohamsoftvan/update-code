@@ -3,8 +3,9 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { fetchDeploymentRTSPJobById } from "../../../../_redux/DeploymentRTSPJobs/DeploymentRTSPJobsAction";
 import { dateTimeFormatter } from "../../../../../../../../utils/DateTimeFormatter";
 import CommonModal from "../../../../../../../../utils/SuperAdmin/CommonModal";
+import {useParams} from "react-router-dom";
 
-export function DeploymentRTSPJobsViewDialog({ id, show, onHide }) {
+export function DeploymentRTSPJobsViewDialog({ show, onHide }) {
   const dispatch = useDispatch();
   const { deploymentRTSPJobsFetchedById } = useSelector(
     state => ({
@@ -13,6 +14,7 @@ export function DeploymentRTSPJobsViewDialog({ id, show, onHide }) {
     }),
     shallowEqual
   );
+    const {id} = useParams();
 
   useEffect(() => {
     if (id) dispatch(fetchDeploymentRTSPJobById(id));

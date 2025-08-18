@@ -3,8 +3,9 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { fetchInferJobById } from "../../_redux/InferJobsAction";
 import { dateTimeFormatter } from "../../../../../../utils/DateTimeFormatter";
 import CommonModal from "../../../../../../utils/SuperAdmin/CommonModal";
+import {useParams} from "react-router-dom";
 
-export function InferJobsViewDialog({ id, show, onHide }) {
+export function InferJobsViewDialog({ show, onHide }) {
   const dispatch = useDispatch();
   const { actionsLoading, inferJobsFetchedById } = useSelector(
     (state) => ({
@@ -14,6 +15,7 @@ export function InferJobsViewDialog({ id, show, onHide }) {
     shallowEqual
   );
 
+    const {id} = useParams();
   useEffect(() => {
     if (id) dispatch(fetchInferJobById(id));
     //eslint-disable-next-line

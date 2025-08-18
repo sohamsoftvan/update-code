@@ -1,156 +1,135 @@
-import React, { useState } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Button, Typography, Box, Alert, TextField, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Box ,Typography} from "@mui/material";
+import Sidebar from "../../../../../../utils/SuperAdmin/Sidebar";
+import Addstep, {configureSteps} from "../../../../../../utils/SuperAdmin/Addstep";
+import StepNavigation from "../../../../../../utils/SuperAdmin/StepNavigation";
+import GoBack from "../../../../../../utils/SuperAdmin/GoBack";
+import {useNavigate} from "react-router-dom";
+import {AllDeployedJobsData, AllLocationOption} from "../../../../../../utils/SuperAdmin/enums/CompanyOption";
+import DeployedRTSPJobsCameraDialog from "./DeployedRTSPJobsCameraDialog";
+import AddLocationDialog from "./AddLocationDialog";
 
-const ConfiguredUserDialog = ({ isOpen, toggle, user, onSave, onCancel }) => {
+
+function ConfiguredUserDialog() {
+  const [activeStep, setActiveStep] = useState(0);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [formData, setFormData] = useState({
-    role: user?.role || "",
-    permissions: user?.permissions || [],
-    status: user?.status || "active"
-  });
+  const [deployedModelOptions, setDeployedModelOptions] = useState([]);
+  const [selectedDeployedModel, setSelectedDeployedModel] = useState(null);
 
-  const handleSave = async () => {
-    setLoading(true);
-    setError(null);
-    
-    try {
-      await onSave({ ...user, ...formData });
-      toggle();
-      // Navigate back to user management
-      navigate("/company/company-user");
-    } catch (err) {
-      setError(err.message || "Failed to configure user");
-    } finally {
-      setLoading(false);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    setDeployedModelOptions(AllDeployedJobsData.map(data => ({
+      value: data?.deployment_job_rtsp_details?.model_details?.id,
+      label: data?.deployment_job_rtsp_details?.model_details?.model_name
+    })))
+  }, [AllDeployedJobsData]);
+  const handleBackMainPage = () => {
+    navigate("/company/company-user");
+  };
+  const handleBack = () => {
+    setActiveStep(prevActiveStep => prevActiveStep - 1);
+  };
+  const handleNext = () => {
+    if (activeStep === 0) {
+      console.log("Api call in Company Details")
+      setActiveStep(prevActiveStep => prevActiveStep + 1);
     }
+    if (activeStep === 1) {
+      setActiveStep(prevActiveStep => prevActiveStep + 1);
+    }
+    if (activeStep === 2) {
+      setActiveStep(prevActiveStep => prevActiveStep + 1);
+    }
+
+
+  };
+  const validateField = (name, value) => {
+    let msg = "";
+    if (!value) {
+      msg = `${name.replace(/_/g, " ")} is required`;
+    }
+    setErrors((prev) => ({...prev, [name]: msg}));
+    return msg;
   };
 
-  const handleCancel = () => {
-    toggle();
-    onCancel && onCancel();
-  };
+  const handleFinish = () => {
 
-  const handlePermissionChange = (permission) => {
-    const currentPermissions = formData.permissions;
-    const newPermissions = currentPermissions.includes(permission)
-      ? currentPermissions.filter(p => p !== permission)
-      : [...currentPermissions, permission];
-    
-    setFormData({ ...formData, permissions: newPermissions });
-  };
+  }
+
+  const handleDeployedModelChange = (selected) => {
+    const value = selected?.value || "";
+    setSelectedDeployedModel(selected)
+    validateField("deployed_model", value);
+  }
+  const steps = Addstep('configure');
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="lg">
-      <ModalHeader toggle={toggle}>
-        <Typography variant="h6">
-          Configure User: {user?.firstname} {user?.lastname}
-        </Typography>
-      </ModalHeader>
-      
-      <ModalBody>
-        <Box display="flex" flexDirection="column" gap={2}>
-          {error && (
-            <Alert severity="error" onClose={() => setError(null)}>
-              {error}
-            </Alert>
-          )}
-
-          <Box>
-            <Typography variant="subtitle1" color="primary">
-              User Information
-            </Typography>
-            <Typography variant="body2">
-              <strong>Name:</strong> {user?.firstname} {user?.lastname}
-            </Typography>
-            <Typography variant="body2">
-              <strong>Email:</strong> {user?.email}
-            </Typography>
-            <Typography variant="body2">
-              <strong>Company:</strong> {user?.company?.name || 'N/A'}
-            </Typography>
+      <>
+        <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "white",
+              borderRadius: 1,
+              border: "1px solid",
+              borderColor: "grey"
+            }}
+        >
+          <Box style={{alignSelf: "flex-start"}}>
+            <GoBack onBack={handleBackMainPage}/>
           </Box>
 
-          <FormControl fullWidth>
-            <InputLabel>Role</InputLabel>
-            <Select
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-            >
-              <MenuItem value="admin">Admin</MenuItem>
-              <MenuItem value="user">User</MenuItem>
-              <MenuItem value="supervisor">Supervisor</MenuItem>
-              <MenuItem value="manager">Manager</MenuItem>
-            </Select>
-          </FormControl>
+          <Box style={{display: "flex"}}>
+            <Sidebar
+                activeStep={activeStep}
+                steps={configureSteps}
+                lastSecondWord={'configure'}
+            />
 
-          <FormControl fullWidth>
-            <InputLabel>Status</InputLabel>
-            <Select
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+            <Box
+                style={{
+                  flexGrow: 1,
+                  borderRadius: 1,
+                  border: "1px solid",
+                  borderColor: "grey"
+                }}
             >
-              <MenuItem value="active">Active</MenuItem>
-              <MenuItem value="inactive">Inactive</MenuItem>
-              <MenuItem value="suspended">Suspended</MenuItem>
-            </Select>
-          </FormControl>
+              <Typography variant={"h4"}
+                          className={"ml-3 mt-2 mb-5"}>{Addstep('configure')[activeStep]}</Typography>
 
-          <Box>
-            <Typography variant="subtitle1" color="primary">
-              Permissions
-            </Typography>
-            <Box display="flex" flexDirection="column" gap={1}>
-              {[
-                "view_dashboard",
-                "manage_users", 
-                "manage_cameras",
-                "view_reports",
-                "manage_models",
-                "configure_system"
-              ].map((permission) => (
-                <Box key={permission} display="flex" alignItems="center">
-                  <input
-                    type="checkbox"
-                    id={permission}
-                    checked={formData.permissions.includes(permission)}
-                    onChange={() => handlePermissionChange(permission)}
-                  />
-                  <label htmlFor={permission} style={{ marginLeft: '8px' }}>
-                    {permission.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                  </label>
-                </Box>
-              ))}
+              <Box className={"tusk_dataSources-scroll"}>
+                <>
+                  {Addstep('configure')[activeStep] === 'Location' ? (
+                      <>
+                        <AddLocationDialog cameraModalData={AllLocationOption}/>
+                      </>
+                  ) : Addstep('configure')[activeStep] === 'Camera' && (
+                      <>
+                        <DeployedRTSPJobsCameraDialog deployedModelOptions={deployedModelOptions}
+                                                      handleDeployedModelChange={handleDeployedModelChange}
+                                                      cameraModalData={AllDeployedJobsData[0]}
+                                                      selectedDeployedModel={selectedDeployedModel}/>
+                      </>
+                  )}
+
+                </>
+              </Box>
+
+              <StepNavigation
+                  activeStep={activeStep}
+                  stepsCount={steps.length}
+                  onBack={handleBack}
+                  onNext={handleNext}
+                  onFinish={handleFinish}
+              />
             </Box>
+
           </Box>
+
         </Box>
-      </ModalBody>
-      
-      <ModalFooter>
-        <Box display="flex" gap={2}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSave}
-            disabled={loading}
-          >
-            {loading ? "Saving..." : "Save Configuration"}
-          </Button>
-          
-          <Button
-            variant="outlined"
-            onClick={handleCancel}
-            disabled={loading}
-          >
-            Cancel
-          </Button>
-        </Box>
-      </ModalFooter>
-    </Modal>
+      </>
   );
-};
+}
 
 export default ConfiguredUserDialog;

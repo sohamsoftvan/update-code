@@ -7,17 +7,11 @@ export default function FrameUploader() {
     return (
         <Suspense fallback={<LayoutSplashScreen />}>
             <Routes>
-                {/* Redirect /frame-uploader to default tab */}
-                <Route
-                    path="/company/frame-uploader"
-                    element={<Navigate to="/company/frame-uploader/storage-frame" replace />}
-                />
+                {/* Redirect index to default tab */}
+                <Route index element={<Navigate to="storage-frame" replace />} />
 
                 {/* Dynamic tab route */}
-                <Route
-                    path="/company/frame-uploader/:tab"
-                    element={<FrameUploaderPage />}
-                />
+                <Route path=":tab" element={<FrameUploaderPage />} />
             </Routes>
         </Suspense>
     );

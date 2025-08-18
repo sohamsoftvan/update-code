@@ -7,13 +7,10 @@ export default function DeploymentJobs({ setKey }) {
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
       <Routes>
-        {/* Redirect from /deploymentDetails root URL to /deploymentDetails/deploymentJobsPage */}
+        {/* Redirect from index to deploymentJobsPage */}
+        <Route index element={<Navigate to="deploymentJobsPage" replace />} />
         <Route
-          path="/deploymentDetails"
-          element={<Navigate to="/deploymentDetails/deploymentJobsPage" replace />}
-        />
-        <Route
-          path="/deploymentDetails/deploymentJobsPage/*"
+          path="deploymentJobsPage/*"
           element={<DeploymentJobsPage setKey={setKey} />}
         />
       </Routes>

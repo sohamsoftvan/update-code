@@ -52,7 +52,7 @@ export function DeviceEditForm({ saveDevice, deviceData, onHide,show,id,loading 
           applyButton={true}
           content={
             <>
-              <SavingDetailsModal show={loading} top={"start"} />
+              {/*<SavingDetailsModal show={loading} top={"start"} />*/}
               <Form>
                 <Form.Group as={Row} controlId="deviceName">
                   <Form.Label column sm={4}>

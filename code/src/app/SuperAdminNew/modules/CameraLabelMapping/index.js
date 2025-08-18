@@ -5,13 +5,14 @@ import { CameraLabelMappingPage } from "./components/CameraLabelMappingPage";
 
 export default function CameraLabelMapping() {
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Routes>
-        <Route
-          path={"/company/camera-label-mapping"}
-          element={<CameraLabelMappingPage />}
-        />
-      </Routes>
-    </Suspense>
+      <CameraLabelMappingPage/>
+    // <Suspense fallback={<LayoutSplashScreen />}>
+    //   <Routes>
+    //     <Route
+    //       path={"/company/camera-label-mapping"}
+    //       element={<CameraLabelMappingPage />}
+    //     />
+    //   </Routes>
+    // </Suspense>
   );
 }

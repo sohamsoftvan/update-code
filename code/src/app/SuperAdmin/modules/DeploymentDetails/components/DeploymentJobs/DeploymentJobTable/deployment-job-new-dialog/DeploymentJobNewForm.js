@@ -53,7 +53,7 @@ export function DeploymentJobNewForm({ saveDeploymentJob, onHide,show,loading })
           applyButton={true}
           content={
             <>
-              <SavingDetailsModal show={loading} />
+              {/*<SavingDetailsModal show={loading} />*/}
               <Form>
                 <Form.Group controlId="imageSize" as={Row}>
                   <Form.Label column sm={4}>

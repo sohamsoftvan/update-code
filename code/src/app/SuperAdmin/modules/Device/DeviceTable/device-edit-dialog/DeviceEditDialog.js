@@ -4,10 +4,11 @@ import { DeviceEditForm } from "./DeviceEditForm";
 import * as action from "../../_redux/DeviceAction";
 import { DeviceSlice } from "../../_redux/DeviceSlice";
 import { successToast } from "../../../../../../utils/ToastMessage";
+import {useParams} from "react-router-dom";
 
 const { actions } = DeviceSlice;
 
-export function DeviceEditDialog({ id, show, onHide }) {
+export function DeviceEditDialog({ show, onHide }) {
   const { actionsLoading, deviceFetchedById } = useSelector(
     state => ({
       actionsLoading: state.device.actionsLoading,
@@ -15,6 +16,7 @@ export function DeviceEditDialog({ id, show, onHide }) {
     }),
     shallowEqual
   );
+  const {id} = useParams();
   //
   const dispatch = useDispatch();
 
