@@ -7,6 +7,10 @@ import { UserNotificationsDropdown } from "../extras/dropdowns/UserNotifications
 import { shallowEqual, useSelector } from "react-redux";
 import { BreadCrumbs } from "../subheader/components/BreadCrumbs";
 import { useLocation } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import { useThemeMode } from "../../_core/MaterialThemeProvider";
 import {
   getBreadcrumbsAndTitle,
   useSubheader,
@@ -21,6 +25,7 @@ export function Topbar() {
   const uiService = useHtmlClassService();
   const location = useLocation();
   const subheader = useSubheader();
+  const { mode, toggle } = useThemeMode();
   const modelname = useSelector((state) => {
     return state.subscription.modelname;
   });
@@ -179,6 +184,11 @@ export function Topbar() {
         {/*{layoutProps.viewLanguagesDisplay && <LanguageSelectorDropdown />}*/}
 
         {layoutProps.viewUserDisplay && <QuickUserToggler />}
+        <div className="topbar-item ml-3">
+          <IconButton color="inherit" onClick={toggle} aria-label="Toggle dark mode">
+            {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+          </IconButton>
+        </div>
       </div>
     </>
   );

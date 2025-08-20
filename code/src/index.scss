@@ -62,6 +62,32 @@
 $primary: #147b82 !default; //#3699FF !default; // Bootstrap variable
 $primary-hover: #42979b !default; //#3699FF !default; // Bootstrap
 
+// =============================================
+// Global theme variables for light/dark switching
+// =============================================
+:root {
+  --app-text: #1f1f1f;
+  --app-bg: #ffffff;
+  --app-surface: #ffffff;
+  --app-border: #e2e2e2;
+  --app-muted: #6c757d;
+}
+
+.theme-dark {
+  --app-text: #e6e6e6;
+  --app-bg: #121212;
+  --app-surface: #1e1e1e;
+  --app-border: #333333;
+  --app-muted: rgba(230,230,230,0.65);
+}
+
+// Apply defaults everywhere; individual components inherit
+body,
+.app-root {
+  color: var(--app-text);
+  background-color: var(--app-bg);
+}
+
 .example-highlight > pre {
   background: none transparent !important;
   margin: 0 !important;
@@ -221,6 +247,235 @@ $primary-hover: #42979b !default; //#3699FF !default; // Bootstrap
 }
 body {
   overflow-y: auto !important;
+}
+
+// Global light/dark helpers for non-MUI areas
+.theme-light body,
+.theme-light .app-root {
+  background-color: var(--app-bg);
+  color: var(--app-text);
+}
+
+.theme-dark body,
+.theme-dark .app-root {
+  background-color: var(--app-bg);
+  color: var(--app-text);
+}
+
+.theme-dark .card,
+.theme-dark .modal-content,
+.theme-dark .dropdown-menu {
+  background-color: var(--app-surface);
+  color: var(--app-text);
+}
+
+.theme-dark .table thead th {
+  background-color: #1b1b1b;
+}
+
+// Scope Metronic dark variants so header, topbar, brand and aside properly theme
+.theme-dark {
+  @import "./_metronic/_assets/sass/themes/layout/header/base/dark.scss";
+  @import "./_metronic/_assets/sass/themes/layout/header/menu/dark.scss";
+  @import "./_metronic/_assets/sass/themes/layout/brand/dark.scss";
+  @import "./_metronic/_assets/sass/themes/layout/aside/dark.scss";
+
+  // Improve text colors used widely in the app for dark backgrounds
+  .text-dark { color: var(--app-text) !important; }
+  .text-dark-50 { color: rgba(230,230,230,0.5) !important; }
+  .text-dark-60 { color: rgba(230,230,230,0.6) !important; }
+  .text-dark-70 { color: rgba(230,230,230,0.7) !important; }
+  .text-dark-75 { color: rgba(230,230,230,0.75) !important; }
+  .text-dark-80 { color: rgba(230,230,230,0.8) !important; }
+
+  // Inputs and simple surfaces
+  .form-control,
+  .custom-select,
+  .input-group-text {
+    background-color: var(--app-surface);
+    color: var(--app-text);
+    border-color: var(--app-border);
+  }
+  .form-control::placeholder { color: rgba(230,230,230,0.6); }
+
+  // Topbar buttons hover contrast
+  .btn.btn-light,
+  .btn.btn-clean {
+    color: #e6e6e6;
+  }
+  .btn.btn-light:hover,
+  .btn.btn-clean:hover {
+    background: rgba(255,255,255,0.06);
+  }
+
+  // Dropdowns and menus
+  .dropdown-menu .navi .navi-item .navi-link {
+    color: var(--app-text);
+  }
+
+  // Force common text elements to be readable in dark
+  h1, h2, h3, h4, h5, h6,
+  p, span, label, li, dt, dd, small,
+  .card-title, .card-text,
+  .subheader .subheader-title,
+  .breadcrumb .breadcrumb-item,
+  .menu-text,
+  .aside-menu .menu-nav > .menu-item .menu-text,
+  .topbar .text-muted,
+  .MuiTypography-root {
+    color: var(--app-text) !important;
+  }
+
+  // Muted and secondary tones for dark
+  .text-muted, .text-secondary { color: var(--app-muted) !important; }
+
+  // Links
+  a { color: #9fd4d7; }
+  a:hover { color: #bde4e6; }
+
+  // Breadcrumb links
+  .breadcrumb .breadcrumb-item a { color: #9fd4d7 !important; }
+
+  // SVG icon fills on dark surfaces
+  .svg-icon svg g [fill]:not([fill="none"]) {
+    fill: var(--app-text) !important;
+  }
+
+  // ApexCharts dark mode styling
+  .apexcharts-title-text,
+  .apexcharts-subtitle-text,
+  .apexcharts-legend-text,
+  .apexcharts-xaxis-title-text,
+  .apexcharts-yaxis-title-text,
+  .apexcharts-xaxis-label,
+  .apexcharts-yaxis-label {
+    fill: var(--app-text) !important;
+    color: var(--app-text) !important;
+  }
+  .apexcharts-tooltip,
+  .apexcharts-menu {
+    background: var(--app-surface) !important;
+    color: var(--app-text) !important;
+    border: 1px solid var(--app-border) !important;
+  }
+  .apexcharts-gridlines-horizontal .apexcharts-gridline,
+  .apexcharts-gridlines-vertical .apexcharts-gridline,
+  .apexcharts-xaxis line,
+  .apexcharts-yaxis line {
+    stroke: var(--app-border) !important;
+    opacity: 0.4 !important;
+  }
+  .apexcharts-svg,
+  .apexcharts-canvas {
+    background: transparent !important;
+  }
+
+  // Highcharts dark mode styling
+  .highcharts-background { fill: var(--app-surface) !important; }
+  .highcharts-title,
+  .highcharts-subtitle,
+  .highcharts-axis-title,
+  .highcharts-axis-labels text,
+  .highcharts-legend-item text {
+    fill: var(--app-text) !important;
+    color: var(--app-text) !important;
+  }
+  .highcharts-grid-line,
+  .highcharts-axis-line { stroke: var(--app-border) !important; opacity: 0.4; }
+  .highcharts-tooltip span {
+    background: var(--app-surface) !important;
+    color: var(--app-text) !important;
+    border: 1px solid var(--app-border) !important;
+  }
+
+  // MUI table header / cells / pagination colors
+  .MuiTableCell-head {
+    background-color: var(--app-surface) !important;
+    color: var(--app-text) !important;
+    border-bottom: 1px solid var(--app-border) !important;
+  }
+  .MuiTableCell-root { color: var(--app-text) !important; }
+  .MuiTablePagination-root,
+  .MuiTablePagination-toolbar,
+  .MuiIconButton-root,
+  .MuiSvgIcon-root {
+    color: var(--app-text) !important;
+  }
+  .MuiMenu-paper { background: var(--app-surface) !important; color: var(--app-text) !important; }
+  .MuiMenu-paper .MuiListItem-root { color: var(--app-text) !important; }
+
+  // React-Bootstrap-Table and generic table styling
+  .react-bootstrap-table table,
+  .table {
+    color: var(--app-text);
+  }
+  .react-bootstrap-table table th,
+  .react-bootstrap-table table td,
+  .table th,
+  .table td {
+    border-color: var(--app-border) !important;
+  }
+  .table thead th { background: #1b1b1b; }
+  .table-striped tbody tr:nth-of-type(odd) { background-color: rgba(255,255,255,0.02); }
+  .table-hover tbody tr:hover { background-color: rgba(255,255,255,0.06); }
+
+  // Pagination styles (bootstrap-like)
+  .pagination .page-link {
+    background: var(--app-surface);
+    color: var(--app-text);
+    border: 1px solid var(--app-border);
+  }
+  .pagination .page-item.active .page-link {
+    background: $primary;
+    color: #fff;
+    border-color: $primary;
+  }
+  .pagination .page-link:hover { background: rgba(255,255,255,0.06); }
+}
+
+// Light mode table/chart pagination refinements
+.theme-light {
+  .MuiTableCell-head { background: #f7f7f7; border-bottom: 1px solid var(--app-border); }
+  .pagination .page-link { background: #fff; color: var(--app-text); border: 1px solid var(--app-border); }
+  .pagination .page-item.active .page-link { background: $primary; color: #fff; border-color: $primary; }
+}
+
+// Light mode helpers so everything is consistent
+.theme-light {
+  .text-muted { color: var(--app-muted) !important; }
+  .form-control,
+  .custom-select,
+  .input-group-text {
+    background-color: #fff;
+    color: var(--app-text);
+    border-color: var(--app-border);
+  }
+  .dropdown-menu .navi .navi-item .navi-link {
+    color: var(--app-text);
+  }
+}
+
+// Common surfaces and borders
+.card,
+.modal-content,
+.dropdown-menu {
+  background-color: var(--app-surface);
+  color: var(--app-text);
+}
+
+.table td,
+.table th {
+  color: var(--app-text);
+}
+
+.form-control,
+.custom-select,
+.input-group-text,
+.border,
+.table,
+.modal-content,
+.dropdown-menu {
+  border-color: var(--app-border);
 }
 .input-group-prepend-override {
   margin-right : -8px !important;
