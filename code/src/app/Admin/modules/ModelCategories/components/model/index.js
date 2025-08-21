@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Col, Row} from "react-bootstrap";
 import {useSubheader} from "../../../../../../_metronic/layout";
-import Card from "@mui/material/Card";
+import {Card} from "@mui/material";
 import {
     CardBody,
     CardHeader
@@ -13,13 +13,14 @@ import {DeployNowTab} from "./DeployNowTab";
 import BlockUi from "react-block-ui";
 import SweetAlert from "react-bootstrap-sweetalert";
 import {StartTestingModal} from "./StartTestingModal";
-import {CameraDetailsModal} from "./CameraDetailsModal";
+import CameraDetailsModal from "./CameraDetailsModal";
 import {useDispatch} from "react-redux";
 import {setModelName} from "../../../../../../redux/subscriptionReducer";
 import ImageVideoModal from "./ImageVideoModal";
 import VideoCameraRtspUploadModal from "./VideoCameraRtspUploadModal";
 import ImageRtspModal from "./ImageRtspModal";
 import CustomizedButtons from "../../../../../../utils/SuperAdmin/CustomizedButtons";
+import {useParams} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     header: {
@@ -34,7 +35,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function Model({id}) {
+export default function Model() {
+    const {id} = useParams();
     const classes = useStyles();
     const subheader = useSubheader();
     subheader.setTitle("Marketplace");

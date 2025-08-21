@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Form} from "react-bootstrap";
-import Button from "@mui/material/Button";
+import {Button} from "@mui/material";
 import VideoToFramesNew, {VideoToFramesMethod} from "./VideoToFrames";
 import {Row, Col} from "reactstrap";
 import 'react-image-crop/dist/ReactCrop.css';

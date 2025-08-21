@@ -204,14 +204,14 @@ export const UploadModal = ({
                 content={
                     <>
                         <Grid container spacing={2} alignItems="center">
-                            <Grid item xl={6} lg={6} md={6} xs={6}>
+                            <Grid item size={{xl : 6, xs :6 , md : 6, lg :6}}>
                                 <span
                                     className={`float-end font-weight-boldest-500 ${uploadMode === "Local" && selectedfile.length > LOCAL_FILE_LIMIT && "image-validation"}`}
                                 >
                                     {uploadMode === "Local" ? `Total: ${selectedfile.length}/${LOCAL_FILE_LIMIT}` : null}
                                 </span>
                             </Grid>
-                            <Grid item xl={6} lg={6} md={6} xs={6} style={{textAlign: "right"}}>
+                            <Grid item size={{xl : 6, xs :6 , md : 6, lg :6}} style={{textAlign: "right"}}>
                                 <AutocompleteDropDownMenuNew
                                     className={"w-50"}
                                     id="upload-mode-autocomplete"

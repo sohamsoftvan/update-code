@@ -1,5 +1,5 @@
 import { withStyles } from "@mui/styles";
-import InputBase from "@mui/material/InputBase";
+import {InputBase} from "@mui/material";
 
 export const BootstrapInput = withStyles((theme) => ({
   root: {

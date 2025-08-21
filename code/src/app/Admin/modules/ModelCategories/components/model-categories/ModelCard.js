@@ -1,108 +1,71 @@
-import React, { useState } from "react";
-import { Card, CardBody, CardHeader, CardTitle } from "reactstrap";
-import { Button, Typography, Box, Chip, IconButton } from "@mui/material";
-import { Edit, Delete, Visibility } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import {CardMedia ,CardContent ,Typography ,CardActions ,Button ,Card} from "@mui/material";
+import React, { useEffect } from "react";
+import { makeStyles } from "@mui/styles";
+import { useNavigate} from "react-router-dom";
+import clsx from "clsx";
+import { ADMIN_URL } from "../../../../../../enums/constant";
+import { setModelName } from "../../../../../../redux/subscriptionReducer";
+import { useDispatch } from "react-redux";
+const useStyles = makeStyles({
+  card: {
+    maxWidth: 380,
+    height: "100%",
+  },
+  media: {
+    height: 210,
+  },
+  header: {
+    paddingBottom: "0rem",
+  },
+  learnMore: {
+    position: "absolute",
+    bottom: 0,
+  },
+});
 
-const ModelCard = ({ model, onEdit, onDelete, onView }) => {
+export function ModelCard({ model }) {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const handleEdit = async () => {
-    setLoading(true);
-    try {
-      await onEdit(model);
-      navigate(`/admin/model-categories/edit/${model.id}`);
-    } catch (error) {
-      console.error("Edit failed:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this model?")) {
-      setLoading(true);
-      try {
-        await onDelete(model.id);
-      } catch (error) {
-        console.error("Delete failed:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
-  const handleView = () => {
-    navigate(`/admin/model-categories/view/${model.id}`);
-  };
-
+  const MODEL_CATEGORY_PAGE_BASE_URL = ADMIN_URL + "/model-categories/view";
+  useEffect(() => {
+    dispatch(setModelName(""));
+    // eslint-disable-next-line
+  }, []);
   return (
-    <Card className="model-card">
-      <CardHeader>
-        <CardTitle>
-          <Typography variant="h6" component="h3">
-            {model.name}
+      //eslint-disable-next-line
+      <Card className={clsx(classes.card)} className="new-card-css">
+        {/*<CardActionArea>*/}
+        <CardMedia
+            className={classes.media}
+            image={
+                model?.model_banner_image?.model_banner_image ||
+                "https://www.iotforall.com/wp-content/uploads/2018/02/Coming-Soon-to-a-Hotel-Near-You-AI-for-Building-Maintenance-696x428.jpg"
+            }
+            title={model?.model_name}
+            alt={`${model?.model_name} Image`}
+        />
+        <CardContent style={{ minHeight: "140px" }}>
+          <Typography gutterBottom variant="h5" component="h2">
+            {model?.model_name}
           </Typography>
-        </CardTitle>
-      </CardHeader>
-      <CardBody>
-        <Box display="flex" flexDirection="column" gap={2}>
-          <Typography variant="body2" color="textSecondary">
-            {model.description}
+          <Typography variant="body2" color="textSecondary" component="p">
+            {model?.model_description}
           </Typography>
-          
-          <Box display="flex" gap={1} flexWrap="wrap">
-            <Chip 
-              label={model.category} 
-              color="primary" 
-              size="small" 
-            />
-            <Chip 
-              label={model.status} 
-              color={model.status === 'active' ? 'secondary' : 'default'} 
-              size="small" 
-            />
-          </Box>
-
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="caption" color="textSecondary">
-              Created: {new Date(model.created_at).toLocaleDateString()}
-            </Typography>
-            
-            <Box display="flex" gap={1}>
-              <IconButton
-                size="small"
-                onClick={handleView}
-                disabled={loading}
-                color="primary"
-              >
-                <Visibility />
-              </IconButton>
-              
-              <IconButton
-                size="small"
-                onClick={handleEdit}
-                disabled={loading}
-                color="primary"
-              >
-                <Edit />
-              </IconButton>
-              
-              <IconButton
-                size="small"
-                onClick={handleDelete}
-                disabled={loading}
-                color="secondary"
-              >
-                <Delete />
-              </IconButton>
-            </Box>
-          </Box>
-        </Box>
-      </CardBody>
-    </Card>
+        </CardContent>
+        <CardActions>
+          <Button
+              size="small"
+              className={classes.learnMore}
+              color="primary"
+              onClick={() => {
+                navigate(`${MODEL_CATEGORY_PAGE_BASE_URL}/model/${model?.id}`);
+              }}
+          >
+            Learn More
+          </Button>
+        </CardActions>
+      </Card>
   );
-};
-
-export default ModelCard;
+}

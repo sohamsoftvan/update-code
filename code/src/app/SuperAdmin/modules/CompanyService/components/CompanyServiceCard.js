@@ -17,7 +17,7 @@ import {
   FormControlLabel,
   Grid,
   Radio,
-  RadioGroup,CardHeader,Tooltip,Popper
+  RadioGroup ,Popper ,Tooltip ,CardHeader
 } from "@mui/material";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../../../../_metronic/_helpers";
@@ -229,6 +229,9 @@ export function CompanyServiceCard() {
     setSelectedFilter("");
     setStatusValue("");
     setRoleId(null);
+    setRoleValue("");
+    getAllUserList(pageNo, pageSize);
+    setShowFilter(false);
   };
 
   const handleSearchChange = event => {
@@ -322,346 +325,336 @@ export function CompanyServiceCard() {
   };
 
   return (
-    <>
-      <Card className="example example-compact">
-        <CardBody style={{ padding: "10px 10px" }}>
-          <Row>
-            <Col xl={8} xs={12} md={5}>
-              <CardHeader title="User Data" />
-            </Col>
-            <Col xl={2} xs={12} md={4}>
-              <input
-                type="text"
-                autoFocus={true}
-                placeholder="Search..."
-                // value={searchValue}
-                onChange={handleSearchChange}
-                className="form-control mt-5"
-              />
-            </Col>
-            <Col xl={2} xs={12} md={3}>
-              <div className={"d-flex"}>
-                <div>
-                  <Tooltip title={"Filter"}>
-                    <div
-                      type="button"
-                      className="btn btn-light mt-5"
-                      onClick={handleClickFilter}
-                    >
+      <>
+        <Card className="example example-compact">
+          <CardBody style={{ padding: "10px 10px" }}>
+            <Row>
+              <Col xl={8} xs={12} md={5}>
+                <CardHeader title="User Data" />
+              </Col>
+              <Col xl={2} xs={12} md={4}>
+                <input
+                    type="text"
+                    autoFocus={true}
+                    placeholder="Search..."
+                    // value={searchValue}
+                    onChange={handleSearchChange}
+                    className="form-control mt-5"
+                />
+              </Col>
+              <Col xl={2} xs={12} md={3}>
+                <div className={"d-flex"}>
+                  <div>
+                    <Tooltip title={"Filter"}>
+                      <div
+                          type="button"
+                          className="btn btn-light mt-5"
+                          onClick={handleClickFilter}
+                      >
                       <span className="svg-icon svg-icon-md svg-icon-primary">
                         <SVG
-                          title="Filter"
-                          src={toAbsoluteUrl(
-                            "/media/svg/icons/Text/Filter.svg"
-                          )}
+                            title="Filter"
+                            src={toAbsoluteUrl(
+                                "/media/svg/icons/Text/Filter.svg"
+                            )}
                         />
                       </span>
-                    </div>
-                  </Tooltip>
-                  <Popper
-                    open={showFilter}
-                    anchorEl={anchorEl}
-                    placement={"bottom-end"}
-                    transition
-                    className={"popper-card"}
-                  >
-                    <ClickAwayListener onClickAway={handleClickAway}>
-                      <div className={"mainCard"}>
-                        <Grid container className={"popper-width"}>
-                          <Grid
-                            item
-                            xs={12}
-                            sm={5}
-                            md={5}
-                            lg={5}
-                            className={"borderStyle flex content"}
-                            style={{
-                              borderBottomLeftRadius: 5,
-                              borderBottomRightRadius: 5
-                            }}
-                          >
-                            <div>
-                              <div
-                                className={
-                                  selectedFilter === "user"
-                                    ? "filter-menu-onclick"
-                                    : "filter-menu"
-                                }
-                                onClick={() => handleClickFilterSubmenu("user")}
-                              >
-                                <span>Company User</span>
-                                <span
-                                  className="svg-icon svg-icon-md "
-                                  style={{ float: "right" }}
-                                >
-                                  <SVG
-                                    title="Filter"
-                                    src={toAbsoluteUrl(
-                                      "/media/svg/icons/Navigation/Angle-right.svg"
-                                    )}
-                                  />
-                                </span>
-                              </div>
-                              <div
-                                className={
-                                  selectedFilter === "roles"
-                                    ? "filter-menu-onclick"
-                                    : "filter-menu"
-                                }
-                                onClick={() =>
-                                  handleClickFilterSubmenu("roles")
-                                }
-                              >
-                                <span>Roles</span>
-                                <span
-                                  className="svg-icon svg-icon-md"
-                                  style={{ float: "right" }}
-                                >
-                                  <SVG
-                                    title="Filter"
-                                    src={toAbsoluteUrl(
-                                      "/media/svg/icons/Navigation/Angle-right.svg"
-                                    )}
-                                  />
-                                </span>
-                              </div>
-                              <div
-                                className={
-                                  selectedFilter === "status"
-                                    ? "filter-menu-onclick"
-                                    : "filter-menu"
-                                }
-                                onClick={() =>
-                                  handleClickFilterSubmenu("status")
-                                }
-                              >
-                                <span>Status</span>
-                                <span
-                                  className="svg-icon svg-icon-md"
-                                  style={{ float: "right" }}
-                                >
-                                  <SVG
-                                    title="Filter"
-                                    src={toAbsoluteUrl(
-                                      "/media/svg/icons/Navigation/Angle-right.svg"
-                                    )}
-                                  />
-                                </span>
-                              </div>
-                            </div>
-                          </Grid>
-
-                          <Grid
-                            item
-                            xs={12}
-                            md={7}
-                            sm={7}
-                            lg={7}
-                            className={"borderStyle flex content"}
-                            style={{
-                              borderBottomLeftRadius: 5,
-                              borderBottomRightRadius: 5
-                            }}
-                          >
-                            <BlockUi
-                              tag="div"
-                              blocking={companyListLoader}
-                              color="#147b82"
+                      </div>
+                    </Tooltip>
+                    <Popper
+                        open={showFilter}
+                        anchorEl={anchorEl}
+                        placement={"bottom-end"}
+                        className={"popper-card"}
+                    >
+                      <ClickAwayListener onClickAway={handleClickAway}>
+                        <div className={"mainCard"}>
+                          <Grid container className={"popper-width"}>
+                            <Grid
+                                item
+                                size={{xs : 12, sm :5 , md : 5, lg :5}}
+                                className={"borderStyle flex content"}
+                                style={{
+                                  borderBottomLeftRadius: 5,
+                                  borderBottomRightRadius: 5
+                                }}
                             >
-                              {selectedFilter === "user" ? (
-                                <>
-                                  {companyListOptions &&
-                                  companyListOptions.length > 0 ? (
-                                    <div
-                                      className={
-                                        companyListOptions &&
-                                        companyListOptions.length > 3
-                                          ? " filter-search-scroll"
-                                          : ""
-                                      }
-                                    >
-                                      <>
-                                        {companyListOptions &&
-                                          companyListOptions.map(
-                                            (key, value) => (
-                                              <div
-                                                className={
-                                                  userFilter === key.value
-                                                    ? "filter-menu-onclick"
-                                                    : "filter-menu"
-                                                }
-                                                onClick={() =>
-                                                  compunyUserApplyFilter(key)
-                                                }
-                                              >
-                                                {key.label}
-                                              </div>
-                                            )
-                                          )}
-                                      </>
-                                    </div>
-                                  ) : (
-                                    <div className={"text-center"}>
-                                      {selectedFilter === "user" ? (
-                                        <span>No Data Available</span>
-                                      ) : (
-                                        <></>
-                                      )}
-                                    </div>
-                                  )}
-                                </>
-                              ) : selectedFilter === "roles" ? (
-                                <>
-                                  <div
+                              <div>
+                                <div
                                     className={
-                                      allRoles && allRoles.length > 3
-                                        ? " filter-search-scroll"
-                                        : ""
+                                      selectedFilter === "user"
+                                          ? "filter-menu-onclick"
+                                          : "filter-menu"
                                     }
+                                    onClick={() => handleClickFilterSubmenu("user")}
+                                >
+                                  <span>Company User</span>
+                                  <span
+                                      className="svg-icon svg-icon-md "
+                                      style={{ float: "right" }}
                                   >
-                                    {allRoles &&
-                                      allRoles.map(data => (
-                                        <Col
-                                          xl={12}
-                                          md={12}
-                                          lg={12}
-                                          sm={12}
-                                          xs={12}
-                                        >
-                                          <Form.Group
-                                            controlId="status"
-                                            className={"m-0"}
+                                  <SVG
+                                      title="Filter"
+                                      src={toAbsoluteUrl(
+                                          "/media/svg/icons/Navigation/Angle-right.svg"
+                                      )}
+                                  />
+                                </span>
+                                </div>
+                                <div
+                                    className={
+                                      selectedFilter === "roles"
+                                          ? "filter-menu-onclick"
+                                          : "filter-menu"
+                                    }
+                                    onClick={() =>
+                                        handleClickFilterSubmenu("roles")
+                                    }
+                                >
+                                  <span>Roles</span>
+                                  <span
+                                      className="svg-icon svg-icon-md"
+                                      style={{ float: "right" }}
+                                  >
+                                  <SVG
+                                      title="Filter"
+                                      src={toAbsoluteUrl(
+                                          "/media/svg/icons/Navigation/Angle-right.svg"
+                                      )}
+                                  />
+                                </span>
+                                </div>
+                                <div
+                                    className={
+                                      selectedFilter === "status"
+                                          ? "filter-menu-onclick"
+                                          : "filter-menu"
+                                    }
+                                    onClick={() =>
+                                        handleClickFilterSubmenu("status")
+                                    }
+                                >
+                                  <span>Status</span>
+                                  <span
+                                      className="svg-icon svg-icon-md"
+                                      style={{ float: "right" }}
+                                  >
+                                  <SVG
+                                      title="Filter"
+                                      src={toAbsoluteUrl(
+                                          "/media/svg/icons/Navigation/Angle-right.svg"
+                                      )}
+                                  />
+                                </span>
+                                </div>
+                              </div>
+                            </Grid>
+
+                            <Grid
+                                item
+                                size={{xs : 12, sm :7 , md : 7, lg :7}}
+                                className={"borderStyle flex content"}
+                                style={{
+                                  borderBottomLeftRadius: 5,
+                                  borderBottomRightRadius: 5
+                                }}
+                            >
+                              <BlockUi
+                                  tag="div"
+                                  blocking={companyListLoader}
+                                  color="#147b82"
+                              >
+                                {selectedFilter === "user" ? (
+                                    <>
+                                      {companyListOptions &&
+                                      companyListOptions.length > 0 ? (
+                                          <div
+                                              className={
+                                                companyListOptions &&
+                                                companyListOptions.length > 3
+                                                    ? " filter-search-scroll"
+                                                    : ""
+                                              }
                                           >
-                                            <Col sm={12}>
-                                              <RadioGroup
+                                            <>
+                                              {companyListOptions &&
+                                                  companyListOptions.map(
+                                                      (key, value) => (
+                                                          <div
+                                                              className={
+                                                                userFilter === key.value
+                                                                    ? "filter-menu-onclick"
+                                                                    : "filter-menu"
+                                                              }
+                                                              onClick={() =>
+                                                                  compunyUserApplyFilter(key)
+                                                              }
+                                                          >
+                                                            {key.label}
+                                                          </div>
+                                                      )
+                                                  )}
+                                            </>
+                                          </div>
+                                      ) : (
+                                          <div className={"text-center"}>
+                                            {selectedFilter === "user" ? (
+                                                <span>No Data Available</span>
+                                            ) : (
+                                                <></>
+                                            )}
+                                          </div>
+                                      )}
+                                    </>
+                                ) : selectedFilter === "roles" ? (
+                                    <>
+                                      <div
+                                          className={
+                                            allRoles && allRoles.length > 3
+                                                ? " filter-search-scroll"
+                                                : ""
+                                          }
+                                      >
+                                        {allRoles &&
+                                            allRoles.map(data => (
+                                                <Col
+                                                    xl={12}
+                                                    md={12}
+                                                    lg={12}
+                                                    sm={12}
+                                                    xs={12}
+                                                >
+                                                  <Form.Group
+                                                      controlId="status"
+                                                      className={"m-0"}
+                                                  >
+                                                    <Col sm={12}>
+                                                      <RadioGroup
+                                                          aria-labelledby="demo-error-radios"
+                                                          name="roles"
+                                                          className={"filter-radio"}
+                                                          style={{
+                                                            fontSize: "14px",
+                                                            fontWeight: 500
+                                                          }}
+                                                          value={roleValue}
+                                                          onChange={() =>
+                                                              handleRoleChange(data)
+                                                          }
+                                                      >
+                                                        <FormControlLabel
+                                                            value={data?.role}
+                                                            control={<Radio />}
+                                                            label={data?.role}
+                                                            color="#147b82"
+                                                        />
+                                                      </RadioGroup>
+                                                    </Col>
+                                                  </Form.Group>
+                                                </Col>
+                                            ))}
+                                      </div>
+                                    </>
+                                ) : selectedFilter === "status" ? (
+                                    <div style={{ height: "150px" }}>
+                                      <Col xl={12} md={12} lg={12} sm={12} xs={12}>
+                                        <Form.Group controlId="status">
+                                          <Col sm={12}>
+                                            <RadioGroup
                                                 aria-labelledby="demo-error-radios"
-                                                name="roles"
+                                                name="status"
                                                 className={"filter-radio"}
                                                 style={{
                                                   fontSize: "14px",
                                                   fontWeight: 500
                                                 }}
-                                                value={roleValue}
-                                                onChange={() =>
-                                                  handleRoleChange(data)
-                                                }
-                                              >
-                                                <FormControlLabel
-                                                  value={data?.role}
+                                                value={statusValue}
+                                                onChange={handleStatusChange}
+                                            >
+                                              <FormControlLabel
+                                                  value="true"
                                                   control={<Radio />}
-                                                  label={data?.role}
+                                                  label="Active"
                                                   color="#147b82"
-                                                />
-                                              </RadioGroup>
-                                            </Col>
-                                          </Form.Group>
-                                        </Col>
-                                      ))}
-                                  </div>
-                                </>
-                              ) : selectedFilter === "status" ? (
-                                <div style={{ height: "150px" }}>
-                                  <Col xl={12} md={12} lg={12} sm={12} xs={12}>
-                                    <Form.Group controlId="status">
-                                      <Col sm={12}>
-                                        <RadioGroup
-                                          aria-labelledby="demo-error-radios"
-                                          name="status"
-                                          className={"filter-radio"}
-                                          style={{
-                                            fontSize: "14px",
-                                            fontWeight: 500
-                                          }}
-                                          value={statusValue}
-                                          onChange={handleStatusChange}
-                                        >
-                                          <FormControlLabel
-                                            value="true"
-                                            control={<Radio />}
-                                            label="Active"
-                                            color="#147b82"
-                                          />
-                                          <FormControlLabel
-                                            value="false"
-                                            control={<Radio />}
-                                            label="Deactive"
-                                          />
-                                        </RadioGroup>
+                                              />
+                                              <FormControlLabel
+                                                  value="false"
+                                                  control={<Radio />}
+                                                  label="Deactive"
+                                              />
+                                            </RadioGroup>
+                                          </Col>
+                                        </Form.Group>
                                       </Col>
-                                    </Form.Group>
-                                  </Col>
-                                </div>
-                              ) : (
-                                <div style={{ height: "150px" }}></div>
-                              )}
-                            </BlockUi>
+                                    </div>
+                                ) : (
+                                    <div style={{ height: "150px" }}></div>
+                                )}
+                              </BlockUi>
+                            </Grid>
                           </Grid>
-                        </Grid>
 
-                        <Grid container className={"popper-width"}>
-                          <Grid
-                            item
-                            xs={12}
-                            sm={12}
-                            md={12}
-                            lg={12}
-                            className={"borderStyle flex content"}
-                            style={{
-                              borderBottomLeftRadius: 5,
-                              borderBottomRightRadius: 5,
-                              padding: "10px"
-                            }}
-                          >
-                            <div className={"d-flex justify-content-end"}>
-                              <CustomizedButtons
-                                  submit={clearFilter}
-                                  title={"Clear Filters"}
-                                  color={"secondary"}
-                                  className={"reset-filter mr-2"}
-                              />
-                              <CustomizedButtons
-                                  submit={applyFilter}
-                                  title={"Apply"}
-                                  color={"secondary"}
-                                  className={"reset-filter mr-2"}
-                              />
-                            </div>
+                          <Grid container className={"popper-width"}>
+                            <Grid
+                                item
+                                size={{xs : 12, sm :12 , md : 12, lg :12}}
+                                className={"borderStyle flex content"}
+                                style={{
+                                  borderBottomLeftRadius: 5,
+                                  borderBottomRightRadius: 5,
+                                  padding: "10px"
+                                }}
+                            >
+                              <div className={"d-flex justify-content-end"}>
+                                <CustomizedButtons
+                                    submit={clearFilter}
+                                    title={"Clear Filters"}
+                                    color={"secondary"}
+                                    className={"reset-filter mr-2"}
+                                />
+                                <CustomizedButtons
+                                    submit={applyFilter}
+                                    title={"Apply"}
+                                    color={"secondary"}
+                                    className={"reset-filter mr-2"}
+                                />
+                              </div>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                      </div>
-                    </ClickAwayListener>
-                  </Popper>
+                        </div>
+                      </ClickAwayListener>
+                    </Popper>
+                  </div>
+                  &nbsp; &nbsp;
+                  <CustomizedButtons
+                      submit={addUserModal}
+                      title={"Add User"}
+                      color={"primary"}
+                      className={"mt-5"}
+                  />
                 </div>
-                &nbsp; &nbsp;
-                <CustomizedButtons
-                    submit={addUserModal}
-                    title={"Add User"}
-                    color={"primary"}
-                    className={"mt-5"}
-                />
-              </div>
-            </Col>
-          </Row>
-          <hr />
+              </Col>
+            </Row>
+            <hr />
 
-          <CompanyServiceTable
-            companyListByIdLoader={userListLoader}
-            userDataByCompany={allUserData}
-            getAllUserList={getAllUserList}
-            pageSize={pageSize}
-            pageNo={pageNo}
-            userTotalCount={userTotalCount}
-            setPageNo={setPageNo}
-            setPageSize={setPageSize}
-          />
-        </CardBody>
-      </Card>
+            <CompanyServiceTable
+                companyListByIdLoader={userListLoader}
+                userDataByCompany={allUserData}
+                getAllUserList={getAllUserList}
+                pageSize={pageSize}
+                pageNo={pageNo}
+                userTotalCount={userTotalCount}
+                setPageNo={setPageNo}
+                setPageSize={setPageSize}
+            />
+          </CardBody>
+        </Card>
 
-      <AddUserModal
-        addUserModalShow={addUserModalShow}
-        addUserModalClose={addUserModalClose}
-        saveUser={saveUserApply}
-      />
-    </>
+        <AddUserModal
+            addUserModalShow={addUserModalShow}
+            addUserModalClose={addUserModalClose}
+            saveUser={saveUserApply}
+        />
+      </>
   );
 }

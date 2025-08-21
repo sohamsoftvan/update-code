@@ -431,6 +431,116 @@ body {
     border-color: $primary;
   }
   .pagination .page-link:hover { background: rgba(255,255,255,0.06); }
+
+  // react-bootstrap-table2 paginator and size-per-page dropdown
+  .react-bootstrap-table-pagination {
+    .page-item .page-link {
+      color: var(--app-text);
+      background: var(--app-surface);
+      border-color: var(--app-border);
+    }
+    .page-item.disabled .page-link {
+      color: rgba(230,230,230,0.4);
+      background: rgba(255,255,255,0.02);
+    }
+    .page-item.active .page-link {
+      background: $primary;
+      color: #fff;
+      border-color: $primary;
+    }
+    .dropdown-toggle.btn {
+      background: var(--app-surface);
+      color: var(--app-text);
+      border: 1px solid var(--app-border);
+    }
+    .dropdown-menu {
+      background: var(--app-surface);
+      color: var(--app-text);
+      border: 1px solid var(--app-border);
+    }
+    .dropdown-item { color: var(--app-text); }
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+      background: rgba(255,255,255,0.06);
+      color: var(--app-text);
+    }
+    .dropdown-divider { border-top: 1px solid var(--app-border); }
+  }
+
+  // Generic dropdown buttons
+  .dropdown-toggle.btn,
+  .btn.dropdown-toggle {
+    background: var(--app-surface);
+    color: var(--app-text);
+    border: 1px solid var(--app-border);
+  }
+  .dropdown-menu { background: var(--app-surface); color: var(--app-text); }
+  .dropdown-item { color: var(--app-text); }
+  .dropdown-item:hover { background: rgba(255,255,255,0.06); }
+
+  // Bootstrap daterangepicker (used by u-datetimerange-picker)
+  .daterangepicker {
+    background: var(--app-surface) !important;
+    color: var(--app-text) !important;
+    border: 1px solid var(--app-border) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.45) !important;
+
+    .ranges {
+      border-right: 1px solid var(--app-border);
+      ul { background: var(--app-surface); }
+      li { color: var(--app-text); }
+      li:hover,
+      li.active { background: rgba(255,255,255,0.06); color: #fff; }
+    }
+
+    .drp-calendar {
+      .calendar-table { background: var(--app-surface); }
+      th, td { color: var(--app-text) !important; }
+      td.available:hover { background: rgba(255,255,255,0.06) !important; }
+      td.in-range.available:not(.active):not(.off):not(.today) {
+        background-color: rgba(255,255,255,0.06) !important;
+        color: var(--app-text) !important;
+      }
+      td.active {
+        background-color: $primary !important;
+        color: #fff !important;
+      }
+    }
+
+    select { color: var(--app-text) !important; border-color: var(--app-border) !important; }
+    .drp-selected { color: var(--app-text) !important; }
+    .drp-buttons { border-top: 1px solid var(--app-border) !important; }
+    .drp-buttons .btn { color: var(--app-text); background: var(--app-surface); border: 1px solid var(--app-border); }
+    .drp-buttons .btn.btn-primary { background: $primary; color: #fff; border-color: $primary; }
+  }
+
+  // Modals: header/footer borders, title and close button
+  .modal-content { background: var(--app-surface); color: var(--app-text); border: 1px solid var(--app-border); }
+  .modal-header,
+  .modal-footer { border-color: var(--app-border) !important; background: var(--app-surface); }
+  .modal-title { color: var(--app-text); }
+  .modal .close, .btn-close { color: var(--app-text) !important; opacity: 0.8; }
+  .modal .close:hover, .btn-close:hover { opacity: 1; }
+  .modal-backdrop { background-color: rgba(0,0,0,0.75) !important; }
+
+  // Dropdowns: background, borders, item states
+  .dropdown-menu { background: var(--app-surface) !important; border: 1px solid var(--app-border) !important; box-shadow: 0 8px 20px rgba(0,0,0,0.45); }
+  .dropdown-item { color: var(--app-text) !important; }
+  .dropdown-item.active,
+  .dropdown-item:active { background: $primary !important; color: #fff !important; }
+  .dropdown-item:hover { background: rgba(255,255,255,0.06) !important; }
+  .dropdown-toggle::after { border-top-color: var(--app-text) !important; }
+
+  // Icons: MUI, FontAwesome, KeenThemes
+  .MuiSvgIcon-root { color: var(--app-text) !important; }
+  .fa, .fas, .far, .fal, .fab { color: var(--app-text) !important; }
+  i.ki, [class^="flaticon-"], [class*=" flaticon-"] { color: var(--app-text) !important; }
+  .svg-icon.svg-icon-primary:hover svg g [fill] { fill: #bde4e6 !important; }
+
+  // Pagination focus/disabled refinements
+  .pagination .page-link:focus { box-shadow: 0 0 0 0.1rem rgba(20,125,130,.35); }
+  .pagination .page-item.disabled .page-link { color: rgba(230,230,230,0.35); background: rgba(255,255,255,0.02); border-color: var(--app-border); }
+  .react-bootstrap-table-pagination .page-item.disabled .page-link { color: rgba(230,230,230,0.35); }
 }
 
 // Light mode table/chart pagination refinements
@@ -936,7 +1046,36 @@ body {
   top: 0;
   background-color: #fff; /* or use your header background */
   z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #e2e2e2;
 }
+
+/* Ensure Popper appears above sticky header */
+.popper-card {
+  z-index: 9999 !important;
+}
+
+/* Table title sticky positioning */
+.table-title {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 15;
+  padding: 15px 0;
+  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 10px;
+}
+
+/* Make table container scrollable */
+.sticky-header-table {
+  max-height: calc(100vh - 350px);
+  overflow-y: auto;
+}
+
+.sticky-header-table .react-bootstrap-table {
+  height: 100%;
+}
+
 /* Optional: Fixed pagination (footer) */
 .react-bootstrap-table-pagination {
   position: sticky;

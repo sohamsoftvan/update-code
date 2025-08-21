@@ -23,32 +23,32 @@ class Navigation extends React.Component {
   }
   render() {
     return (
-      <Card className="example example-compact">
-        <CardBody>
-          <Tabs
-            id="controlled-tab-example"
-            activeKey={this.state.activekey}
-            onSelect={e => this.handleKey(e)}
-            style={{
-              fontSize: "1.275rem",
-              fontWeight: "500",
-              marginBottom: "18px"
-            }}
-          >
-            <Tab eventKey="public" title="Public">
-               <ModelCategories isPublic={this.state.isPublic} userid={this.props.user.id} />
-            </Tab>
+        <Card className="example example-compact">
+          <CardBody>
+            <Tabs
+                id="controlled-tab-example"
+                activeKey={this.state.activekey}
+                onSelect={e => this.handleKey(e)}
+                style={{
+                  fontSize: "1.275rem",
+                  fontWeight: "500",
+                  marginBottom: "18px"
+                }}
+            >
+              <Tab eventKey="public" title="Public">
+                <ModelCategories isPublic={this.state.isPublic} userid={this.props.user.id} />
+              </Tab>
 
-            <Tab eventKey="private" title="Private">
+              <Tab eventKey="private" title="Private">
 
-              <ModelCategoriesPrivate
-                isPublic={this.state.isPublic}
-                userid={this.props.user.id}
-              />
-            </Tab>
-          </Tabs>
-        </CardBody>
-      </Card>
+                <ModelCategoriesPrivate
+                    isPublic={this.state.isPublic}
+                    userid={this.props.user.id}
+                />
+              </Tab>
+            </Tabs>
+          </CardBody>
+        </Card>
     );
   }
 }

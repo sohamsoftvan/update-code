@@ -1,10 +1,10 @@
 import {Col, FormControl, InputGroup, Row} from "react-bootstrap";
-import Card from "@mui/material/Card";
+import { Card } from "@mui/material";
 import {
     CardBody,
     CardHeader
 } from "../../../../../../_metronic/_partials/controls";
-import {ModelCard} from "./ModelCard";
+import { ModelCard } from "./ModelCard";
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@mui/styles";
 import {useSubheader} from "../../../../../../_metronic/layout";
@@ -17,7 +17,7 @@ import {
     getAllAIModelsByCategoryList
 } from "../../_redux/ModelCategories/ModelCategoryApi";
 import BlockUi from "react-block-ui";
-import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
 import {warningToast} from "../../../../../../utils/ToastMessage";
 import * as auth from "../../../Auth";
 
@@ -88,7 +88,7 @@ function ModelCategories(props) {
                         }
                     }
                     let obj = generateOptions(objectCategory);
-                        setCategoryOptions(obj);
+                    setCategoryOptions(obj);
 
 
                 })
@@ -123,7 +123,7 @@ function ModelCategories(props) {
                     );
                     if (res) {
                         models.push(...res.data);
-                            setModels(models);
+                        setModels(models);
                         setLoaderState(false);
                     }
                 } catch (error) {

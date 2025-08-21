@@ -12,7 +12,7 @@ import {CameraPage} from "./Admin/pages/CameraPage";
 import AllCameraPage from "./Admin/pages/AllCameraPage";
 import AllCameraLogPage from "./Admin/pages/AllCameraLogPage";
 import AllCameraStatusPage from "./Admin/pages/AllCameraStatusPage";
-import {ModelCategoriesTabPage} from "./Admin/pages/ModelCategoriesTabPage";
+import ModelCategoriesTabPage from "./Admin/pages/ModelCategoriesTabPage";
 import {Supervisor} from "./Admin/pages/SupervisorPage";
 import MyResultsTabPage from "./Admin/pages/MyResultsTabPage";
 import SubscriptionTabPage from "./Admin/pages/SubscriptionTabPage";
@@ -113,7 +113,7 @@ const adminRoutes = [
     //
     // Model Categories
     {
-        path: "/admin/model-categories",
+        path: "/admin/model-categories/*",
         element: protectedRoute([ADMIN_ROLE], <ModelCategoriesTabPage/>)
     },
     

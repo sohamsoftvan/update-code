@@ -1,5 +1,5 @@
 import { Col, FormControl, InputGroup, Row } from "react-bootstrap";
-import Card from "@mui/material/Card";
+import { Card } from "@mui/material";
 import {
   CardBody,
   CardHeader
@@ -17,7 +17,7 @@ import {
   getAllAIModelsByCategoryList
 } from "../../_redux/ModelCategories/ModelCategoryApi";
 import BlockUi from "react-block-ui";
-import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
 import { warningToast } from "../../../../../../utils/ToastMessage";
 import * as auth from "../../../Auth";
 
@@ -42,11 +42,11 @@ const useStyles = makeStyles({
 function ModelCategoriesPrivate(props) {
   const dispatch = useDispatch();
   const { modelCategoryList, listLoading } = useSelector(
-    state => ({
-      modelCategoryList: state.modelCategory.privateEntities,
-      listLoading: state.modelCategory.listLoading
-    }),
-    shallowEqual
+      state => ({
+        modelCategoryList: state.modelCategory.privateEntities,
+        listLoading: state.modelCategory.listLoading
+      }),
+      shallowEqual
   );
 
   const [models, setModels] = useState([]);
@@ -78,23 +78,23 @@ function ModelCategoriesPrivate(props) {
     if (!props.isPublic) {
       let objectCategory = [];
       getAllModelMainCategory()
-        .then(response => {
-          if (response && response.data) {
-            let object = response.data;
-            for (let i = 0; i < object.length; i++) {
-              objectCategory.push(object[i]);
+          .then(response => {
+            if (response && response.data) {
+              let object = response.data;
+              for (let i = 0; i < object.length; i++) {
+                objectCategory.push(object[i]);
+              }
             }
-          }
-          let obj = generateOptions(objectCategory);
-          setCategoryOptions(obj);
-        })
-        .catch(error => {
-          if (error.detail) {
-            warningToast(error.detail);
-          } else {
-            warningToast("Something went Wrong");
-          }
-        });
+            let obj = generateOptions(objectCategory);
+            setCategoryOptions(obj);
+          })
+          .catch(error => {
+            if (error.detail) {
+              warningToast(error.detail);
+            } else {
+              warningToast("Something went Wrong");
+            }
+          });
     }
     // eslint-disable-next-line
   }, []);
@@ -113,9 +113,9 @@ function ModelCategoriesPrivate(props) {
         try {
           setLoaderState(true);
           let res = await getOneModelCategoryEnabled(
-            modelType.id,
-            props.userid,
-            props.isPublic
+              modelType.id,
+              props.userid,
+              props.isPublic
           );
           if (res) {
             //default 26 models display on the first render
@@ -174,22 +174,22 @@ function ModelCategoriesPrivate(props) {
           selectedCategory.splice(selectedCategory.indexOf(1), 1);
         }
         getAllAIModelsByCategoryList(selectedCategory)
-          .then(response => {
-            if (response && response.data) {
-              //new filter model set of perticular id
-              models.push(...response.data);
-              setModels(models);
+            .then(response => {
+              if (response && response.data) {
+                //new filter model set of perticular id
+                models.push(...response.data);
+                setModels(models);
+                setLoaderState(false);
+              }
+            })
+            .catch(error => {
+              if (error.detail) {
+                warningToast(error.detail);
+              } else {
+                warningToast("Something went Wrong");
+              }
               setLoaderState(false);
-            }
-          })
-          .catch(error => {
-            if (error.detail) {
-              warningToast(error.detail);
-            } else {
-              warningToast("Something went Wrong");
-            }
-            setLoaderState(false);
-          });
+            });
       } else {
         setSelectedCategory([1]);
         setModels([]);
@@ -211,23 +211,23 @@ function ModelCategoriesPrivate(props) {
     if (searchValue) {
       setSearchDataCalled(true);
       getSearchDataOfModal(searchVal, props.userid, props.isPublic)
-        .then(response => {
-          if (response && response.data) {
-            let object = response.data;
-            for (let i = 0; i < object.length; i++) {
-              objectDetection.push(object[i]);
+          .then(response => {
+            if (response && response.data) {
+              let object = response.data;
+              for (let i = 0; i < object.length; i++) {
+                objectDetection.push(object[i]);
+              }
+              setSearchedResponseData(objectDetection);
             }
-            setSearchedResponseData(objectDetection);
-          }
-        })
-        .catch(error => {
-          if (error.detail) {
-          } else {
-            warningToast("Something went Wrong");
-          }
-          setSearchDataCalled(true);
-          setSearchedResponseData([]);
-        });
+          })
+          .catch(error => {
+            if (error.detail) {
+            } else {
+              warningToast("Something went Wrong");
+            }
+            setSearchDataCalled(true);
+            setSearchedResponseData([]);
+          });
     } else {
       setSearchDataCalled(false);
       setSearchedResponseData([]);
@@ -244,131 +244,131 @@ function ModelCategoriesPrivate(props) {
     handleCategoryChange(e.target.id);
   };
   return (
-    <>
-      <InputGroup
-        size="lg"
-        onChange={handleModelSearch}
-        // onBlur={searchData}
-        className={classes.search}
-      >
-        <InputGroup.Prepend>
-          <InputGroup.Text id="inputGroup-sizing-lg">
-            Search Model{" "}
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-        <FormControl
-          size="lg"
-          aria-label="Large"
-          aria-describedby="inputGroup-sizing-sm"
-        />
-        <InputGroup.Append onClick={() => searchData(null)}>
-          <Button
-            variant="outline-secondary"
-            style={{ backgroundColor: "#147b82" }}
-          >
-            <i className="flaticon2-magnifier-tool btn btn-hover-transparent-white" />
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
-      <BlockUi tag="div" blocking={listLoading} color="#147b82">
-        <BlockUi tag="div" blocking={loaderState} color="#147b82">
-          {searchDataCalled && (
-            <Card className="example example-compact mb-4">
-              <CardHeader title={"Searched Result"}>
-                <CardBody>
-                  {searchedResponseData.length ? (
-                    <>
-                      <Row className="mb-5">
-                        {searchedResponseData.map(model => (
-                          <Col
-                            xl={4}
-                            md={4}
-                            sm={4}
-                            lg={4}
-                            className={classes.card}
-                          >
-                            <ModelCard model={model} />
-                          </Col>
-                        ))}
-                      </Row>
-                    </>
-                  ) : (
-                    <>
-                      <h3 className={"text-center"}>No results found</h3>
-                    </>
-                  )}
-                </CardBody>
-              </CardHeader>
-            </Card>
-          )}
-          {!searchDataCalled && (
-            <>
-              {modelCategoryList?.map(
-                (modelType, idx) =>
-                  models[idx] &&
-                  models[idx].length !== 0 && (
-                    <div className="example example-compact mb-4">
-                      <CardBody>
-                        <div>
-                          {props.isPublic && (
-                            <Col
-                              xl={12}
-                              md={12}
-                              sm={12}
-                              lg={12}
-                              style={{ maxHeight: "200px", overflowY: "auto" }}
-                            >
-                              {/*categoryOptions for display all model category*/}
-                              {categoryOptions.map((item, index) => {
-                                return (
-                                  <>
-                                    <button
-                                      key={index}
-                                      id={index + 1}
-                                      name={item.label}
-                                      className={
-                                        selectedCategory.includes(item.value)
-                                          ? "tag2"
-                                          : "tag"
-                                      }
-                                      onClick={e => handleTagChange(e)}
-                                    >
-                                      {item.label}
-                                    </button>
-                                  </>
-                                );
-                              })}
-                            </Col>
-                          )}
-                        </div>
-                        {/*<div className="separator separator-dashed my-7"></div>*/}
-                        <div className="mt-2"></div>
-                        {idx < models.length ? (
+      <>
+        <InputGroup
+            size="lg"
+            onChange={handleModelSearch}
+            // onBlur={searchData}
+            className={classes.search}
+        >
+          <InputGroup.Prepend>
+            <InputGroup.Text id="inputGroup-sizing-lg">
+              Search Model{" "}
+            </InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl
+              size="lg"
+              aria-label="Large"
+              aria-describedby="inputGroup-sizing-sm"
+          />
+          <InputGroup.Append onClick={() => searchData(null)}>
+            <Button
+                variant="outline-secondary"
+                style={{ backgroundColor: "#147b82" }}
+            >
+              <i className="flaticon2-magnifier-tool btn btn-hover-transparent-white" />
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+        <BlockUi tag="div" blocking={listLoading} color="#147b82">
+          <BlockUi tag="div" blocking={loaderState} color="#147b82">
+            {searchDataCalled && (
+                <Card className="example example-compact mb-4">
+                  <CardHeader title={"Searched Result"}>
+                    <CardBody>
+                      {searchedResponseData.length ? (
                           <>
                             <Row className="mb-5">
-                              {models?.map(model => (
-                                <Col
-                                  xl={4}
-                                  md={4}
-                                  sm={4}
-                                  lg={4}
-                                  className={classes.card}
-                                >
-                                  <ModelCard model={model} />
-                                </Col>
+                              {searchedResponseData.map(model => (
+                                  <Col
+                                      xl={4}
+                                      md={4}
+                                      sm={4}
+                                      lg={4}
+                                      className={classes.card}
+                                  >
+                                    <ModelCard model={model} />
+                                  </Col>
                               ))}
                             </Row>
                           </>
-                        ) : null}
-                      </CardBody>
-                    </div>
-                  )
-              )}
-            </>
-          )}
+                      ) : (
+                          <>
+                            <h3 className={"text-center"}>No results found</h3>
+                          </>
+                      )}
+                    </CardBody>
+                  </CardHeader>
+                </Card>
+            )}
+            {!searchDataCalled && (
+                <>
+                  {modelCategoryList?.map(
+                      (modelType, idx) =>
+                          models[idx] &&
+                          models[idx].length !== 0 && (
+                              <div className="example example-compact mb-4">
+                                <CardBody>
+                                  <div>
+                                    {props.isPublic && (
+                                        <Col
+                                            xl={12}
+                                            md={12}
+                                            sm={12}
+                                            lg={12}
+                                            style={{ maxHeight: "200px", overflowY: "auto" }}
+                                        >
+                                          {/*categoryOptions for display all model category*/}
+                                          {categoryOptions.map((item, index) => {
+                                            return (
+                                                <>
+                                                  <button
+                                                      key={index}
+                                                      id={index + 1}
+                                                      name={item.label}
+                                                      className={
+                                                        selectedCategory.includes(item.value)
+                                                            ? "tag2"
+                                                            : "tag"
+                                                      }
+                                                      onClick={e => handleTagChange(e)}
+                                                  >
+                                                    {item.label}
+                                                  </button>
+                                                </>
+                                            );
+                                          })}
+                                        </Col>
+                                    )}
+                                  </div>
+                                  {/*<div className="separator separator-dashed my-7"></div>*/}
+                                  <div className="mt-2"></div>
+                                  {idx < models.length ? (
+                                      <>
+                                        <Row className="mb-5">
+                                          {models?.map(model => (
+                                              <Col
+                                                  xl={4}
+                                                  md={4}
+                                                  sm={4}
+                                                  lg={4}
+                                                  className={classes.card}
+                                              >
+                                                <ModelCard model={model} />
+                                              </Col>
+                                          ))}
+                                        </Row>
+                                      </>
+                                  ) : null}
+                                </CardBody>
+                              </div>
+                          )
+                  )}
+                </>
+            )}
+          </BlockUi>
         </BlockUi>
-      </BlockUi>
-    </>
+      </>
   );
 }
 
