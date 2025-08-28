@@ -1719,23 +1719,7 @@ class Demo2Dashboard extends Component {
 
                   {this.state.showGraph && (
                       <>
-                        {/*<div className={"graph-dropdown-div mt-2"}>*/}
-                        {/*  <div style={{ float: "left" }}>*/}
-                        {/*    <InputLabel htmlFor="age-native-simple">*/}
-                        {/*      Graph*/}
-                        {/*    </InputLabel>*/}
-                        {/*    <FormControl>*/}
-                        {/*      <DropDownMatrialUi*/}
-                        {/*          graphType={this.state.graphType}*/}
-                        {/*          handleGraphChange={this.handleGraphChange}*/}
-                        {/*          drilldownFromFun={this.state.drilldownFromFun}*/}
-                        {/*      />*/}
-                        {/*    </FormControl>*/}
-                        {/*  </div>*/}
-                        {/*</div>*/}
-
-
-                        <DashboardGraph
+                          <DashboardGraph
                             displayDataTableFromBar={this.displayDataTableFromBar}
                             parameters={this.state.parameters}
                             startDateEndDateFlag={this.state.startDateEndDateFlag}

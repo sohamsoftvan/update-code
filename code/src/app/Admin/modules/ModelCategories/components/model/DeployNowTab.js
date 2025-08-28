@@ -4,23 +4,17 @@ import { FormControl ,InputLabel ,NativeSelect,Button ,TextField} from "@mui/mat
 import { BootstrapInput } from "../../../../../../utils/BootstrapInput";
 import { getAllDeploymentType } from "../../_redux/DeployNowTab/DeployNowApi";
 import { warningToast } from "../../../../../../utils/ToastMessage";
-import { makeStyles } from "@mui/styles";
 import SweetAlert from "react-bootstrap-sweetalert";
 import BlockUi from "react-block-ui";
 import CommonModal from "../../../../../../utils/SuperAdmin/CommonModal";
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    margin: theme.spacing(1),
-    height: 40,
-    fontSize: 12
-  },
+const classes = {
   dropdown: {
     width: "100%",
     marginBottom: "2rem"
   },
   dropdownHeader: {
-    fontSize: 18
+    fontSize: 20
   },
   container: {
     display: "inline-flex",
@@ -28,22 +22,21 @@ const useStyles = makeStyles(theme => ({
     width: "50%"
   },
   textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginLeft: 8,
+    marginRight: 8,
     width: 200
   }
-}));
+};
 
 export function DeployNowTab({
   modelId,
-  sho,
+                               showSub,
   setSub,
   job,
   showCamera,
   setCamera,
   setDeployedJob
 }) {
-  const classes = useStyles();
   let [hasCamera, setHasCamera] = React.useState(true);
 
   const [state, setState] = React.useState({
@@ -174,7 +167,7 @@ export function DeployNowTab({
         <Col className="offset-2 offset-lg-3 offset-md-3  col-8 col-md-6  col-lg-6">
           <CommonModal
               size="lg"
-              show={sho}
+              show={showSub}
               handleClose={() => setSub(false)}
               arialabelledby="example-modal-sizes-title-lg"
               title={"Select Time"}

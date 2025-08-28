@@ -134,7 +134,7 @@ export default function Model() {
         <>
             {showSub && (
                 <DeployNowTab
-                    sho={showSub}
+                    showSub={showSub}
                     setSub={setSub}
                     modelId={model.id}
                     showCamera={showCamera}

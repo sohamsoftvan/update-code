@@ -1,7 +1,8 @@
 import {Col,Row} from "react-bootstrap";
 import React, { useEffect, useRef } from "react";
-import "photoswipe/dist/photoswipe.css";
-import "photoswipe/dist/default-skin/default-skin.css";
+import "photoswipe/style.css";
+// import "photoswipe/dist/photoswipe.css";
+// import "photoswipe/dist/default-skin/default-skin.css";
 import {
   getCredits, getInferJob,
   loadInferJob,
